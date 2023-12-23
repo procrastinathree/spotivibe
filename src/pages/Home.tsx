@@ -9,7 +9,7 @@ const HomePage: React.FC = () => {
       <Helmet>
         <title>Spotivibe | Unleash your experience</title>
       </Helmet>
-        <h1 className="text-3xl text-center font-bold mx-auto text-green-500 mt-64">Founded the page</h1> 
+      <h1 className="mx-auto mt-64 text-3xl font-bold text-center text-green-500"></h1>
     </div>
   );
 };

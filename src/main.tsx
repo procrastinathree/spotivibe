@@ -7,6 +7,7 @@ import Layout from './Layout';
 // Page Import
 import HomePage from './pages/Home';
 import NotFound404 from './pages/NotFound';
+import ProfilePage from './pages/Profile';
 
 const container = document.getElementById('root');
 
@@ -19,7 +20,8 @@ if (container) {
         <Routes>
           {/* Available Public Route */}
           <Route path="/" element={<Layout><HomePage /></Layout>} />
-          
+          <Route path="profile" element={<Layout><ProfilePage /></Layout>} />
+
           {/* Non Routeable */}
           <Route path="*" element={<Layout><NotFound404 /></Layout>} />
         </Routes>
