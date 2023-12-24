@@ -1,14 +1,14 @@
-import React, { ReactNode } from "react";
+import { FC, ReactNode } from "react";
 import Header from "./components/layouts/Header";
 
 interface LayoutProps {
   children: ReactNode;
 }
 
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: FC<LayoutProps> = ({ children }) => {
 
   return (
-    <div className="container">
+    <div className="flex flex-col gap-16">
       <Header />
       <main>{children}</main>
       <footer>

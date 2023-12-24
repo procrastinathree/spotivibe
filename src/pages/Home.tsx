@@ -1,3 +1,4 @@
+import TopofTheDayCard from "@/components/home/TopofTheDay";
 import React from "react";
 import { Helmet } from 'react-helmet';
 
@@ -9,7 +10,9 @@ const HomePage: React.FC = () => {
       <Helmet>
         <title>Spotivibe | Unleash your experience</title>
       </Helmet>
-      <h1 className="mx-auto mt-64 text-3xl font-bold text-center text-green-500"></h1>
+      <div className="container flex flex-col">
+        <TopofTheDayCard />
+      </div>
     </div>
   );
 };

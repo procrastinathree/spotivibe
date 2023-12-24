@@ -2,6 +2,8 @@ import { FC } from "react";
 import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button, buttonVariants } from "../ui/button";
 import { NavLink, useLocation } from "react-router-dom";
+import WelcomeHeader from "../ui/WelcomeHeader";
+import { Input } from "../ui/input";
 
 interface HeaderProps {
 
@@ -9,25 +11,44 @@ interface HeaderProps {
 
 const Header: FC<HeaderProps> = () => {
     const location = useLocation()
+
+    const isLogin: boolean = false
     return (
-        <header>
-            <Card className="mt-4">
+        <header className="bg-slate-200">
+            <Card className="container mt-4 bg-transparent border-9">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>
-                        <NavLink to="/">Spotivibe</NavLink>
+                        <NavLink to="/">
+                            <span className="text-primary">Spoti</span>
+                            <span>vibe</span>
+                        </NavLink>
                     </CardTitle>
-                    <div className="flex gap-2">
-                        <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">My Profile</NavLink>
-                        <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Settings</NavLink>
-                        <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Account</NavLink>
-                    </div>
+                    {isLogin ?
+                        <div className="flex items-center gap-2">
+                            <Input type="search" />
+                            <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">My Profile</NavLink>
+                            <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Settings</NavLink>
+                            <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Account</NavLink>
+                        </div>
+                        :
+                        <div className="flex gap-2">
+                            <Input type="search" placeholder="Search..."/>
+                            {/* this button is to authorize with spotify */}
+                            <Button type="button" size={"lg"}>Sign in with Spotify</Button>
+                        </div>
+                    }
+
                 </CardHeader>
                 {(
                     () => {
                         if (location.pathname === "/") {
-                            return <CardContent>
-                                <p>Welcome back #username! <NavLink className={buttonVariants({ variant: "link" })} to="/profile">Go to profile</NavLink></p>
-                            </CardContent>
+                            if (isLogin) {
+                                return <CardContent>
+                                    <p>Welcome back #username! <NavLink className={buttonVariants({ variant: "link" })} to="/profile">Go to profile</NavLink></p>
+                                </CardContent>
+                            } else {
+                                return <WelcomeHeader />
+                            }
                         } else if (location.pathname === "/profile") {
                             return <div className="flex justify-between">
                                 <div className="flex flex-col flex-grow">
