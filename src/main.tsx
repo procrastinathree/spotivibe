@@ -3,6 +3,7 @@ import { createRoot } from 'react-dom/client';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './main.css';
 import Layout from './Layout';
+import ProtectedRoute from './components/HOC/ProtectedRoute';
 
 // Page Import
 import HomePage from './pages/Home';
@@ -17,11 +18,14 @@ if (container) {
     <React.StrictMode>
       <Router>
         <Routes>
+          {/* Protected Route */}
+          <Route path="/profile" element={<ProtectedRoute><Layout><ProfilePage /></Layout></ProtectedRoute>} />
+
+
           {/* Available Public Route */}
           <Route path="/" element={<Layout>
             <HomePage />
           </Layout>} />
-          <Route path="/profile" element={<Layout><ProfilePage /></Layout>} />
 
           {/* Non Routeable */}
           <Route path="*" element={<Layout><NotFound404 /></Layout>} />
