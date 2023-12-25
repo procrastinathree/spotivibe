@@ -9,7 +9,7 @@ interface TopSectionTwoProps {
 const TopSectionTwo: FC<TopSectionTwoProps> = () => {
     return (
         <div className="flex gap-16">
-            <Card className="w-1/2">
+            <Card className="w-2/3 overflow-hidden">
                 <div className="flex gap-8">
                     <div className="flex flex-col">
                         <CardHeader>
@@ -35,14 +35,14 @@ const TopSectionTwo: FC<TopSectionTwoProps> = () => {
                     </div>
                 </div>
             </Card>
-            <Card className="w-1/2">
+            <Card className="w-1/3 overflow-hidden">
                 <CardHeader>
                     <CardTitle>Popular Now</CardTitle>
                     <CardDescription className="text-lg font-bold">What the world is listening to</CardDescription>
                 </CardHeader>
                 <CardContent>
                     <div className="flex flex-col gap-4">
-                        {/* loop song with this genre with this */}
+                        {/* loop song with this genre with this loop 10x */}
                         <div className="flex items-center gap-4">
                             <Avatar>
                                 <AvatarImage src="https://github.com/shadcn.png" />

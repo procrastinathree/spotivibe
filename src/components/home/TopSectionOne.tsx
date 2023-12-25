@@ -9,9 +9,12 @@ interface TopSectionOneProps {
 const TopSectionOne: FC<TopSectionOneProps> = () => {
     return (
         <div className="flex gap-16">
-            <Card className="w-1/2">
+            <Card className="w-1/3 overflow-hidden">
                 <CardHeader className="relative p-0">
-                    <img src="" alt="artist image" className="object-cover w-full bg-neutral-200 h-80" />
+                    <img
+                        src="https://cdn1-production-images-kly.akamaized.net/1_zuQesMl-JU3cl7snbn-2E5Cvo=/1200x1200/smart/filters:quality(75):strip_icc():format(webp)/kly-media-production/medias/1413328/original/065506300_1479804695-Ed_Sheeran.jpg"
+                        alt="artist image"
+                        className="object-cover w-full opacity-30 bg-neutral-900 h-80" />
                     <div className="absolute bottom-0 left-0 flex flex-col gap-2 p-8">
                         <CardDescription className="p-2 text-base font-bold rounded-lg w-fit bg-secondary text-secondary-foreground">Artist of the Day</CardDescription>
                         <CardTitle className="p-3 text-3xl rounded-lg w-fit bg-primary text-primary-foreground">Ed Sheeran</CardTitle>
@@ -40,9 +43,11 @@ const TopSectionOne: FC<TopSectionOneProps> = () => {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-1/2">
+            <Card className="w-2/3 overflow-hidden">
                 <CardHeader className="relative p-0">
-                    <img src="" alt="artist image" className="object-cover w-full bg-neutral-200 h-80" />
+                    <img src="https://i.ytimg.com/vi/0R6YO0IAN48/maxresdefault.jpg"
+                        alt="artist image"
+                        className="object-cover w-full opacity-30 bg-neutral-900 h-80" />
                     <div className="absolute bottom-0 left-0 flex flex-col gap-2 p-8">
                         <CardDescription className="p-2 text-base font-bold rounded-lg w-fit bg-secondary text-secondary-foreground">Song of the Day</CardDescription>
                         <CardTitle className="p-3 text-3xl rounded-lg w-fit bg-primary text-primary-foreground">Perfect</CardTitle>

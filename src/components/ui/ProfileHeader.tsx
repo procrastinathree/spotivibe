@@ -14,7 +14,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
             <div className="flex flex-col flex-grow gap-8">
                 <div className="flex justify-between">
                     <div className="flex items-end">
-                        <img src="" alt="profile photo" className="w-40 h-40 rounded-full bg-slate-950 text-slate-500" />
+                        <img src="" alt="profile photo" className="w-40 h-40 rounded-full bg-neutral-950 text-neutral-500" />
                         <h1 className="px-4 text-4xl font-semibold text-primary-foreground">First Name Last Name</h1>
                     </div>
                     <div className="flex flex-col items-end gap-2 px-4">
