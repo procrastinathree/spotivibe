@@ -44,11 +44,11 @@ const Footer: FC<FooterProps> = () => {
                 <div className="flex flex-col w-1/5 gap-4">
                     <CardDescription className="text-base font-semibold">Connect</CardDescription>
                     <div className="flex flex-col gap-2">
-                        <NavLink to={"/most-followed-artists"} className="flex items-center gap-2 font-semibold text-neutral-100 hover:text-primary">
+                        <NavLink to={"/most-followed-artists"} className="flex items-center gap-2 font-semibold w-fit text-neutral-100 hover:text-primary">
                             <TwitterIcon size={16} />
                             <span>Twitter</span>
                         </NavLink>
-                        <NavLink to={"/most-popular-artists"} className="flex items-center gap-2 font-semibold text-neutral-100 hover:text-primary">
+                        <NavLink to={"/most-popular-artists"} className="flex items-center gap-2 font-semibold w-fit text-neutral-100 hover:text-primary">
                             <InstagramIcon size={16} />
                             <span>Instagram</span>
                         </NavLink>
