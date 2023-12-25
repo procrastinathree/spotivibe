@@ -27,7 +27,7 @@ const Header: FC<HeaderProps> = () => {
                     </CardTitle>
                     {isLogin ?
                         <div className="flex items-center gap-2">
-                            <Input type="search" placeholder="Search..." />
+                            <Input type="search" placeholder="Search..." className="dark text-neutral-300" />
                             <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">My Profile</NavLink>
                             <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Settings</NavLink>
                             <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Account</NavLink>
