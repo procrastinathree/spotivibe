@@ -1,10 +1,9 @@
 import { FC } from "react";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
+import { CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button, buttonVariants } from "../ui/button";
 import { NavLink, useLocation } from "react-router-dom";
 import WelcomeHeader from "../ui/WelcomeHeader";
 import { Input } from "../ui/input";
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Star } from "lucide-react";
 import ProfileHeader from "../ui/ProfileHeader";
 

@@ -9,7 +9,7 @@ interface LayoutProps {
 const Layout: FC<LayoutProps> = ({ children }) => {
 
   return (
-    <div className="flex flex-col h-screen gap-16 bg-slate-950">
+    <div className="flex flex-col min-h-screen gap-16 bg-slate-950">
       <Header />
       <main className="container">
         {children}
