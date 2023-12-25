@@ -1,6 +1,7 @@
-import TopofTheDayCard from "@/components/home/TopofTheDay";
 import React from "react";
 import { Helmet } from 'react-helmet';
+import TopSectionOne from "@/components/home/TopSectionOne";
+import TopSectionTwo from "@/components/home/TopSectionTwo";
 
 
 const HomePage: React.FC = () => {
@@ -10,8 +11,9 @@ const HomePage: React.FC = () => {
       <Helmet>
         <title>Spotivibe | Unleash your experience</title>
       </Helmet>
-      <div className="container flex flex-col">
-        <TopofTheDayCard />
+      <div className="flex flex-col gap-16">
+        <TopSectionOne />
+        <TopSectionTwo />
       </div>
     </div>
   );

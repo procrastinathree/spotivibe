@@ -2,19 +2,19 @@ import { FC } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-interface TopofTheDayCardProps {
+interface TopSectionOneProps {
 
 }
 
-const TopofTheDayCard: FC<TopofTheDayCardProps> = () => {
+const TopSectionOne: FC<TopSectionOneProps> = () => {
     return (
         <div className="flex gap-16">
             <Card className="w-1/2">
                 <CardHeader className="relative p-0">
                     <img src="" alt="artist image" className="object-cover w-full bg-slate-200 h-80" />
                     <div className="absolute bottom-0 left-0 flex flex-col gap-2 p-8">
-                        <CardDescription className="p-2 text-base font-bold w-fit bg-secondary text-secondary-foreground">Artist of the Day</CardDescription>
-                        <CardTitle className="p-3 text-3xl w-fit bg-primary text-primary-foreground">Ed Sheeran</CardTitle>
+                        <CardDescription className="p-2 text-base font-bold rounded-lg w-fit bg-secondary text-secondary-foreground">Artist of the Day</CardDescription>
+                        <CardTitle className="p-3 text-3xl rounded-lg w-fit bg-primary text-primary-foreground">Ed Sheeran</CardTitle>
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -44,8 +44,8 @@ const TopofTheDayCard: FC<TopofTheDayCardProps> = () => {
                 <CardHeader className="relative p-0">
                     <img src="" alt="artist image" className="object-cover w-full bg-slate-200 h-80" />
                     <div className="absolute bottom-0 left-0 flex flex-col gap-2 p-8">
-                        <CardDescription className="p-2 text-base font-bold w-fit bg-secondary text-secondary-foreground">Song of the Day</CardDescription>
-                        <CardTitle className="p-3 text-3xl w-fit bg-primary text-primary-foreground">Perfect</CardTitle>
+                        <CardDescription className="p-2 text-base font-bold rounded-lg w-fit bg-secondary text-secondary-foreground">Song of the Day</CardDescription>
+                        <CardTitle className="p-3 text-3xl rounded-lg w-fit bg-primary text-primary-foreground">Perfect</CardTitle>
                     </div>
                 </CardHeader>
                 <CardContent>
@@ -66,7 +66,6 @@ const TopofTheDayCard: FC<TopofTheDayCardProps> = () => {
                             {/* song facts */}
                             <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Veniam ipsam modi debitis? Mollitia harum quos consequatur a rerum expedita voluptates, laborum possimus tenetur! Recusandae!</p>
                         </div>
-                        {/* loop his song with this */}
                         <div className="flex flex-col gap-4">
                             <div className="flex items-center gap-4">
                                 <CardDescription className="text-base">Album:</CardDescription>
@@ -88,4 +87,4 @@ const TopofTheDayCard: FC<TopofTheDayCardProps> = () => {
     );
 }
 
-export default TopofTheDayCard;
+export default TopSectionOne;

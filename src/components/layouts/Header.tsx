@@ -12,10 +12,10 @@ interface HeaderProps {
 const Header: FC<HeaderProps> = () => {
     const location = useLocation()
 
-    const isLogin: boolean = false
+    const isLogin: boolean = true
     return (
         <header className="bg-slate-200">
-            <Card className="container mt-4 bg-transparent border-9">
+            <div className="container px-4 mt-4">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>
                         <NavLink to="/">
@@ -25,14 +25,14 @@ const Header: FC<HeaderProps> = () => {
                     </CardTitle>
                     {isLogin ?
                         <div className="flex items-center gap-2">
-                            <Input type="search" />
+                            <Input type="search" placeholder="Search..." />
                             <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">My Profile</NavLink>
                             <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Settings</NavLink>
                             <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Account</NavLink>
                         </div>
                         :
                         <div className="flex gap-2">
-                            <Input type="search" placeholder="Search..."/>
+                            <Input type="search" placeholder="Search..." />
                             {/* this button is to authorize with spotify */}
                             <Button type="button" size={"lg"}>Sign in with Spotify</Button>
                         </div>
@@ -70,7 +70,7 @@ const Header: FC<HeaderProps> = () => {
                     }
                 )()}
 
-            </Card>
+            </div>
         </header>
     );
 }
