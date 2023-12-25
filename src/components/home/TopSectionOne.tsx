@@ -11,7 +11,7 @@ const TopSectionOne: FC<TopSectionOneProps> = () => {
         <div className="flex gap-16">
             <Card className="w-1/2">
                 <CardHeader className="relative p-0">
-                    <img src="" alt="artist image" className="object-cover w-full bg-slate-200 h-80" />
+                    <img src="" alt="artist image" className="object-cover w-full bg-neutral-200 h-80" />
                     <div className="absolute bottom-0 left-0 flex flex-col gap-2 p-8">
                         <CardDescription className="p-2 text-base font-bold rounded-lg w-fit bg-secondary text-secondary-foreground">Artist of the Day</CardDescription>
                         <CardTitle className="p-3 text-3xl rounded-lg w-fit bg-primary text-primary-foreground">Ed Sheeran</CardTitle>
@@ -42,7 +42,7 @@ const TopSectionOne: FC<TopSectionOneProps> = () => {
             </Card>
             <Card className="w-1/2">
                 <CardHeader className="relative p-0">
-                    <img src="" alt="artist image" className="object-cover w-full bg-slate-200 h-80" />
+                    <img src="" alt="artist image" className="object-cover w-full bg-neutral-200 h-80" />
                     <div className="absolute bottom-0 left-0 flex flex-col gap-2 p-8">
                         <CardDescription className="p-2 text-base font-bold rounded-lg w-fit bg-secondary text-secondary-foreground">Song of the Day</CardDescription>
                         <CardTitle className="p-3 text-3xl rounded-lg w-fit bg-primary text-primary-foreground">Perfect</CardTitle>

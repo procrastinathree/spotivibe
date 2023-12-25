@@ -14,18 +14,18 @@ const WelcomeHeader: FC<WelcomeHeaderProps> = () => {
             <div className="flex flex-col items-center gap-2">
                 <h1 className="flex items-center gap-2 text-5xl font-bold">
                     <span className="text-primary-foreground">Welcome to</span>
-                    <span className="px-4 py-2 rounded-lg bg-secondary text-slate-900">Spotivibe</span>
+                    <span className="px-4 py-2 rounded-lg bg-secondary text-neutral-900">Spotivibe</span>
                 </h1>
-                <h5 className="text-2xl font-bold text-slate-500">Spotivibe is a cutting-edge music app that takes your music experience to the next level.</h5>
+                <h5 className="text-2xl font-bold text-neutral-500">Spotivibe is a cutting-edge music app that takes your music experience to the next level.</h5>
             </div>
             <div className="flex flex-col items-center justify-between w-full gap-8">
                 <div className="w-1/3">
                     <Carousel className="w-fit">
                         <CarouselContent className="w-fit">
-                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">View your spotify stats (+number of plays)</CarouselItem>
-                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">Share them with anyone</CarouselItem>
-                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">Compare your taste with friends</CarouselItem>
-                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">Promote your playlist</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-neutral-500">View your spotify stats (+number of plays)</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-neutral-500">Share them with anyone</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-neutral-500">Compare your taste with friends</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-neutral-500">Promote your playlist</CarouselItem>
                         </CarouselContent>
                         <CarouselPrevious />
                         <CarouselNext />

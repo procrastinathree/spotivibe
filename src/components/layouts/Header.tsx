@@ -16,7 +16,7 @@ const Header: FC<HeaderProps> = () => {
 
     const isLogin: boolean = true
     return (
-        <header className="bg-slate-900">
+        <header className="bg-neutral-900">
             <div className="container px-4 mt-4">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>
@@ -34,7 +34,7 @@ const Header: FC<HeaderProps> = () => {
                         </div>
                         :
                         <div className="flex gap-2">
-                            <Input type="search" placeholder="Search..." className="dark text-slate-300" />
+                            <Input type="search" placeholder="Search..." className="dark text-neutral-300" />
                             <Button type="button" variant={"secondary"} className="flex gap-2">
                                 <Star size={16} />
                                 Star us on GitHub
@@ -49,7 +49,7 @@ const Header: FC<HeaderProps> = () => {
                             if (isLogin) {
                                 return <CardContent>
                                     <p>
-                                        <span className="font-semibold text-slate-300">
+                                        <span className="font-semibold text-neutral-300">
                                             Welcome back #username!
                                         </span>
                                         <NavLink className={buttonVariants({ variant: "link", className: "!text-base" })} to="/profile">Go to profile</NavLink>
