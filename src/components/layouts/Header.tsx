@@ -5,6 +5,7 @@ import { NavLink, useLocation } from "react-router-dom";
 import WelcomeHeader from "../ui/WelcomeHeader";
 import { Input } from "../ui/input";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Star } from "lucide-react";
 
 interface HeaderProps {
 
@@ -15,13 +16,13 @@ const Header: FC<HeaderProps> = () => {
 
     const isLogin: boolean = false
     return (
-        <header className="bg-slate-200">
+        <header className="bg-slate-900">
             <div className="container px-4 mt-4">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>
                         <NavLink to="/">
                             <span className="text-primary">Spoti</span>
-                            <span>vibe</span>
+                            <span className="text-primary-foreground">vibe</span>
                         </NavLink>
                     </CardTitle>
                     {isLogin ?
@@ -34,8 +35,10 @@ const Header: FC<HeaderProps> = () => {
                         :
                         <div className="flex gap-2">
                             <Input type="search" placeholder="Search..." />
-                            {/* this button is to authorize with spotify */}
-                            <Button type="button" size={"lg"}>Sign in with Spotify</Button>
+                            <Button type="button" variant={"secondary"} className="flex gap-2">
+                                <Star size={16}/>
+                                Star us on GitHub
+                            </Button>
                         </div>
                     }
 
