@@ -25,20 +25,20 @@ const Footer: FC<FooterProps> = () => {
                 <div className="flex flex-col w-1/5 gap-4">
                     <CardDescription className="text-base font-semibold">Global</CardDescription>
                     <div className="flex flex-col gap-2">
-                        <NavLink to={"/most-followed-artists"} className="font-semibold text-neutral-100 hover:text-primary">Most Followed Artist</NavLink>
-                        <NavLink to={"/most-popular-artists"} className="font-semibold text-neutral-100 hover:text-primary">Most Popular Artist</NavLink>
-                        <NavLink to={"/most-popular-songs"} className="font-semibold text-neutral-100 hover:text-primary">Most Popular Songs</NavLink>
-                        <NavLink to={"/most-popular-albums"} className="font-semibold text-neutral-100 hover:text-primary">Most Popular Albums</NavLink>
+                        <NavLink to={"/most-followed-artists"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Most Followed Artist</NavLink>
+                        <NavLink to={"/most-popular-artists"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Most Popular Artist</NavLink>
+                        <NavLink to={"/most-popular-songs"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Most Popular Songs</NavLink>
+                        <NavLink to={"/most-popular-albums"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Most Popular Albums</NavLink>
                     </div>
                 </div>
                 <div className="flex flex-col w-1/5 gap-4">
                     <CardDescription className="text-base font-semibold">More</CardDescription>
                     <div className="flex flex-col gap-2">
-                        <NavLink to={"/blog"} className="font-semibold text-neutral-100 hover:text-primary">Blog</NavLink>
-                        <NavLink to={"/terms-of-service"} className="font-semibold text-neutral-100 hover:text-primary">Terms of Service</NavLink>
-                        <NavLink to={"/privacy-policy"} className="font-semibold text-neutral-100 hover:text-primary">Privacy Policy</NavLink>
-                        <NavLink to={"/permissions"} className="font-semibold text-neutral-100 hover:text-primary">Permissions</NavLink>
-                        <NavLink to={"/contact"} className="font-semibold text-neutral-100 hover:text-primary">Contact</NavLink>
+                        <NavLink to={"/blog"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Blog</NavLink>
+                        <NavLink to={"/terms-of-service"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Terms of Service</NavLink>
+                        <NavLink to={"/privacy-policy"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Privacy Policy</NavLink>
+                        <NavLink to={"/permissions"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Permissions</NavLink>
+                        <NavLink to={"/contact"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Contact</NavLink>
                     </div>
                 </div>
                 <div className="flex flex-col w-1/5 gap-4">
