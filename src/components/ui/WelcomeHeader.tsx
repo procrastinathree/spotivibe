@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { Button } from "./button";
+import { Button, buttonVariants } from "./button";
 import SpotifyIcon from "../icons/SpotifyIcon";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./carousel";
 
@@ -14,7 +14,7 @@ const WelcomeHeader: FC<WelcomeHeaderProps> = () => {
             <div className="flex flex-col items-center gap-2">
                 <h1 className="flex items-center gap-2 text-5xl font-bold">
                     <span className="text-primary-foreground">Welcome to</span>
-                    <span className="px-4 py-2 rounded-lg bg-secondary">Spotivibe</span>
+                    <span className="px-4 py-2 rounded-lg bg-secondary text-slate-900">Spotivibe</span>
                 </h1>
                 <h5 className="text-2xl font-bold text-slate-500">Spotivibe is a cutting-edge music app that takes your music experience to the next level.</h5>
             </div>
@@ -22,10 +22,10 @@ const WelcomeHeader: FC<WelcomeHeaderProps> = () => {
                 <div className="w-1/3">
                     <Carousel className="w-fit">
                         <CarouselContent className="w-fit">
-                            <CarouselItem className="text-center w-fit text-primary-foreground">View your spotify stats (+number of plays)</CarouselItem>
-                            <CarouselItem className="text-center w-fit text-primary-foreground">Share them with anyone</CarouselItem>
-                            <CarouselItem className="text-center w-fit text-primary-foreground">Compare your taste with friends</CarouselItem>
-                            <CarouselItem className="text-center w-fit text-primary-foreground">Promote your playlist</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">View your spotify stats (+number of plays)</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">Share them with anyone</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">Compare your taste with friends</CarouselItem>
+                            <CarouselItem className="font-semibold text-center w-fit text-slate-500">Promote your playlist</CarouselItem>
                         </CarouselContent>
                         <CarouselPrevious />
                         <CarouselNext />
@@ -34,9 +34,10 @@ const WelcomeHeader: FC<WelcomeHeaderProps> = () => {
 
                 <div className="flex flex-col items-center gap-2">
                     {/* this button is to authorize with spotify */}
-                    <Button type="button" size={"lg"} className="flex items-center gap-4 py-8 text-2xl">
+                    <a href="" type="button" className={buttonVariants({className:"!text-2xl py-8 flex gap-4", size:"lg"})}>
                         <SpotifyIcon size={32} />
-                        Sign in with Spotify</Button>
+                        Sign in with Spotify
+                    </a>
                 </div>
             </div>
         </div>

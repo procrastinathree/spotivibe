@@ -21,7 +21,7 @@ if (container) {
           <Route path="/" element={<Layout>
             <HomePage />
           </Layout>} />
-          <Route path="profile" element={<Layout><ProfilePage /></Layout>} />
+          <Route path="/profile" element={<Layout><ProfilePage /></Layout>} />
 
           {/* Non Routeable */}
           <Route path="*" element={<Layout><NotFound404 /></Layout>} />
