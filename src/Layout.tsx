@@ -2,6 +2,7 @@ import { FC, ReactNode } from "react";
 import Header from "./components/layouts/Header";
 import Footer from "./components/layouts/Footer";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { Toaster } from "./components/ui/toaster";
 
 interface LayoutProps {
   children: ReactNode;
@@ -18,6 +19,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
           {children}
         </main>
         <Footer />
+        <Toaster />
       </div>
     </QueryClientProvider>
   );
