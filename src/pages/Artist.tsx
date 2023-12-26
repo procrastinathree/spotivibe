@@ -1,7 +1,6 @@
 import { TopArtist } from "@/components/profile/TopArtists";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";

@@ -30,7 +30,7 @@ const TopSongsList: FC = () => {
         },
     })
 
-    console.log(data)
+    
 
     let TopSongs: TopSongs[] = data?.data.items
         .map((item: any) => ({
