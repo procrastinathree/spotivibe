@@ -8,11 +8,11 @@ interface LoginHeaderProps {
 
 }
 
-const CLIENT_ID = '8aec2f843ca04ed68b481bc73cf1792e';  
-const REDIRECT_URI = 'http://localhost:5173/profile'; 
+const CLIENT_ID = '8aec2f843ca04ed68b481bc73cf1792e';
+const REDIRECT_URI = 'http://localhost:5173/profile';
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = 'token';
-const SCOPES = ['playlist-modify-private', 'playlist-read-private']; 
+const SCOPES = ['playlist-modify-private', 'playlist-read-private', 'user-read-currently-playing', 'user-read-playback-state'];
 
 const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${SCOPES.join('%20')}&response_type=${RESPONSE_TYPE}&show_dialog=true`;
 
