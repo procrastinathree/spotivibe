@@ -1,5 +1,7 @@
 import React from "react";
 import { Helmet } from 'react-helmet';
+import TopSectionOne from "@/components/home/TopSectionOne";
+import TopSectionTwo from "@/components/home/TopSectionTwo";
 
 
 const HomePage: React.FC = () => {
@@ -9,7 +11,10 @@ const HomePage: React.FC = () => {
       <Helmet>
         <title>Spotivibe | Unleash your experience</title>
       </Helmet>
-      <h1 className="mx-auto mt-64 text-3xl font-bold text-center text-green-500"></h1>
+      <div className="flex flex-col gap-16">
+        <TopSectionOne />
+        <TopSectionTwo />
+      </div>
     </div>
   );
 };
