@@ -7,13 +7,21 @@ import { Input } from "../ui/input";
 import { Star } from "lucide-react";
 import ProfileHeader from "../ui/ProfileHeader";
 import SpotifyIcon from "../icons/SpotifyIcon";
-import backgroundImg from '../../assets/images/background.jpg'; 
+import backgroundImg from '../../assets/images/background.jpg';
+import axios from "axios";
+import { useQuery } from "@tanstack/react-query"; 
 
 interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
   const location = useLocation();
   const isLogin: boolean = !!localStorage.getItem("spotifyAuthToken");
+
+  const token = localStorage.getItem("spotifyAuthToken");
+  const { data: CurrentUser } = useQuery({
+    queryKey: ['CurrentUser'],
+    queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
+  });
 
   return (
     <header
@@ -85,7 +93,7 @@ const Header: FC<HeaderProps> = () => {
                 <CardContent>
                   <p>
                     <span className="font-semibold text-neutral-300">
-                      Welcome back #username!
+                      Welcome back {CurrentUser?.data.display_name ?? "Guest"}
                     </span>
                     <NavLink
                       className={buttonVariants({
