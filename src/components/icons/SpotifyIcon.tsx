@@ -1,9 +1,3 @@
-import { FC } from "react";
-
-interface SpotifyIconProps {
-
-}
-
 const SpotifyIcon = ({ size }: { size: number }) => {
     return (
         <>
