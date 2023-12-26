@@ -12,7 +12,7 @@ const CLIENT_ID = '8aec2f843ca04ed68b481bc73cf1792e';
 const REDIRECT_URI = 'http://localhost:5173/profile';
 const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
 const RESPONSE_TYPE = 'token';
-const SCOPES = ['playlist-modify-private', 'playlist-read-private', 'user-read-currently-playing', 'user-read-playback-state'];
+const SCOPES = ['playlist-modify-private', 'playlist-read-private', 'user-top-read', 'user-read-currently-playing', 'user-read-playback-state','user-modify-playback-state','app-remote-control','streaming','user-read-recently-played','user-read-playback-position'];
 
 const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${SCOPES.join('%20')}&response_type=${RESPONSE_TYPE}&show_dialog=true`;
 

@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { NavLink } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
-import { CardTitle } from "./card";
 import { buttonVariants } from "./button";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";

@@ -1,13 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import TopSongsList from '@/components/profile/TopSongs';
+import TopArtistsList from '@/components/profile/TopArtists';
 
-const ProfilePage: React.FC = () => {
+import { FC } from 'react';
 
+const ProfilePage: FC = () => {
 
   return (
-    <div>
-
-
+    <div className='flex gap-16'>
+      <TopArtistsList />
+      <TopSongsList />
     </div>
   );
 };
