@@ -10,7 +10,8 @@ import HomePage from './pages/Home';
 import NotFound404 from './pages/NotFound';
 import ProfilePage from './pages/Profile';
 import AccountPage from './pages/Account';
-import ArtistPage from './pages/Artist';
+import ArtistsPage from './pages/Artists';
+import SongsPage from './pages/Songs';
 
 const container = document.getElementById('root');
 
@@ -27,7 +28,8 @@ if (container) {
 
           {/* Protected Route */}
           <Route path="/profile" element={<ProtectedRoute><Layout><ProfilePage /></Layout></ProtectedRoute>} />
-          <Route path="/profile/artists" element={<ProtectedRoute><Layout><ArtistPage /></Layout></ProtectedRoute>} />
+          <Route path="/profile/artists" element={<ProtectedRoute><Layout><ArtistsPage /></Layout></ProtectedRoute>} />
+          <Route path="/profile/songs" element={<ProtectedRoute><Layout><SongsPage /></Layout></ProtectedRoute>} />
           <Route path="/account" element={<ProtectedRoute><Layout><AccountPage /></Layout></ProtectedRoute>} />
 
           {/* Non Routeable */}

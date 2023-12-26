@@ -73,7 +73,7 @@ const TopSongsList: FC = () => {
                 ))}
             </CardContent>
             <CardFooter className="flex flex-row justify-center">
-                <NavLink to={"/profile/artists"} className={buttonVariants({ variant: "link", className: "text-lg" })}>SEE ALL</NavLink>
+                <NavLink to={"/profile/songs"} className={buttonVariants({ variant: "link", className: "text-lg" })}>SEE ALL</NavLink>
             </CardFooter>
         </Card>
     );

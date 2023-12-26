@@ -7,11 +7,11 @@ import axios from "axios";
 import { FC, useState } from "react";
 
 
-interface ArtistPageProps {
+interface ArtistsPageProps {
 
 }
 
-const ArtistPage: FC<ArtistPageProps> = () => {
+const ArtistsPage: FC<ArtistsPageProps> = () => {
     const token = localStorage.getItem("spotifyAuthToken")
     const [timeRange, setTimeRange] = useState<string>("long_term")
 
@@ -77,4 +77,4 @@ const ArtistPage: FC<ArtistPageProps> = () => {
     );
 }
 
-export default ArtistPage;
+export default ArtistsPage;
