@@ -1,6 +1,8 @@
 # SpotiVibe
 
-![logo](https://github.com/procrastinathree/spotivibe/blob/main/public/spotivibe.png)
+![# Spotivibe logo for light mode](https://github.com/procrastinathree/spotivibe/blob/main/public/banner-light.png#gh-light-mode-only)
+![# Spotivibe logo for dark mode](https://github.com/procrastinathree/spotivibe/blob/main/public/banner-dark.png#gh-dark-mode-only)
+
 
 
 `Spotivibe` is a web application that enhances your Spotify experience by acquiring data from the Spotify API and providing various features like creating playlists, tracking your Spotify activity, and more.
