@@ -6,7 +6,6 @@ import LoginHeader from "../ui/LoginHeader";
 import { Input } from "../ui/input";
 import { Star } from "lucide-react";
 import ProfileHeader from "../ui/ProfileHeader";
-import SpotifyIcon from "../icons/SpotifyIcon";
 import backgroundImg from '../../assets/images/background.jpg';
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";

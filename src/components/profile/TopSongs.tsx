@@ -1,14 +1,14 @@
 import { FC, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-import axios from 'axios';
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { NavLink } from "react-router-dom";
 import { buttonVariants } from "../ui/button";
+import axios from "axios";
 export type TopSongs = {
     name: string;
-    image: string;
+    image: string
     url: string;
 }
 
@@ -23,19 +23,18 @@ const TopSongsList: FC = () => {
             TopSongs = data?.data.items
                 .map((item: any) => ({
                     name: item.name,
-                    image: item.images[2].url,
+                    image: item.album.images[2].url,
                     url: item.external_urls.spotify
                 }))
             return data
-        },
+        }
     })
 
-    
 
     let TopSongs: TopSongs[] = data?.data.items
         .map((item: any) => ({
             name: item.name,
-            image: item.images[2].url,
+            image: item.album.images[2].url,
             url: item.external_urls.spotify
         })) ?? []
 
