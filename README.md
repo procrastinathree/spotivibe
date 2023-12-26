@@ -1,30 +1,79 @@
-# React + TypeScript + Vite
+# SpotiVibe
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+`Spotivibe` is a web application that enhances your Spotify experience by acquiring data from the Spotify API and providing various features like creating playlists, tracking your Spotify activity, and more.
 
-Currently, two official plugins are available:
+## Table of Contents
+- [Features](#features)
+- [Getting Started](#getting-started)
+  - [Prerequisites](#prerequisites)
+  - [Installation](#installation)
+- [Usage](#usage)
+- [API Integration](#api-integration)
+- [Contributing](#contributing)
+- [License](#license)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## Expanding the ESLint configuration
+`Spotivibe` offers the following features:
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **Playlist Creation**: Create custom playlists based on your music preferences and favorite tracks.
+- **Spotify Activity Tracker**: Keep track of your listening habits and get insights into your music choices.
+- **Spotify API Integration**: Access Spotify's vast music library and user data.
+- **User Authentication**: Securely log in with your Spotify account.
+- **User Profile**: View and manage your `Spotivibe` user profile.
+- **And More**: Explore and discover other exciting functionalities!
 
-- Configure the top-level `parserOptions` property like this:
+## Getting Started
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+Follow these steps to set up `Spotivibe` on your local machine.
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+### Prerequisites
+
+- Node.js and npm installed on your computer.
+- Spotify Developer Account to access the Spotify API.
+
+### Installation
+
+1 . Clone the repository:
+
+   ```bash
+   git clone https://github.com/procrastinathree/spotivibe.git
+   cd spotivibe
+   ```
+2 . Install the required dependencies:
+
+   ```bash
+   npm install
+   yarn install
+   ```
+3 . Create a `.env` file in the root directory and add the following variables with your Spotify API credentials:
+
+   ```bash
+    SPOTIFY_CLIENT_ID=your_client_id
+    SPOTIFY_CLIENT_SECRET=your_client_secret
+    SPOTIFY_REDIRECT_URI=your_redirect_url
+   ```
+4 . Start an application (dev)
+
+   ```bash
+   npm run dev
+   ```
+
+## Usage
+
+1 . Open your web browser and navigate to `http://localhost:5173`
+
+2 . Log in with your Spotify account to start using `Spotivibe`
+
+3 . Explore the features, create playlists, and track your Spotify activity!
+
+## API Integration
+`Spotivibe` relies on the Spotify API for various functionalities. You can learn more about the Spotify API by visiting the Spotify for Developers website and obtaining your API credentials.
+
+## License
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Author
+`Spotivibe` is created by <a href="https://github.com/ramenaru">ramenaru</a>, <a href="https://github.com/KaisAbiyyi">Kais</a>
+
+

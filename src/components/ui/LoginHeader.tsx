@@ -1,14 +1,22 @@
 import { FC } from "react";
-import { Button, buttonVariants } from "./button";
+import { buttonVariants } from "./button";
 import SpotifyIcon from "../icons/SpotifyIcon";
 import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./carousel";
 
 
-interface WelcomeHeaderProps {
+interface LoginHeaderProps {
 
 }
 
-const WelcomeHeader: FC<WelcomeHeaderProps> = () => {
+const CLIENT_ID = '8aec2f843ca04ed68b481bc73cf1792e';  
+const REDIRECT_URI = 'http://localhost:5173/profile'; 
+const AUTH_ENDPOINT = 'https://accounts.spotify.com/authorize';
+const RESPONSE_TYPE = 'token';
+const SCOPES = ['playlist-modify-private', 'playlist-read-private']; 
+
+const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeURIComponent(REDIRECT_URI)}&scope=${SCOPES.join('%20')}&response_type=${RESPONSE_TYPE}&show_dialog=true`;
+
+const LoginHeader: FC<LoginHeaderProps> = () => {
     return (
         <div className="flex flex-col w-full gap-16 px-32 py-16 col">
             <div className="flex flex-col items-center gap-2">
@@ -34,7 +42,7 @@ const WelcomeHeader: FC<WelcomeHeaderProps> = () => {
 
                 <div className="flex flex-col items-center gap-2">
                     {/* this button is to authorize with spotify */}
-                    <a href="" type="button" className={buttonVariants({className:"!text-2xl py-8 flex gap-4", size:"lg"})}>
+                    <a href={loginUrl} type="button" className={buttonVariants({className:"!text-2xl py-8 flex gap-4", size:"lg"})}>
                         <SpotifyIcon size={32} />
                         Sign in with Spotify
                     </a>
@@ -44,4 +52,4 @@ const WelcomeHeader: FC<WelcomeHeaderProps> = () => {
     );
 }
 
-export default WelcomeHeader;
+export default LoginHeader;

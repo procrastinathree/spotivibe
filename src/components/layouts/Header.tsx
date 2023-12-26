@@ -2,19 +2,17 @@ import { FC } from "react";
 import { CardContent, CardHeader, CardTitle } from "../ui/card";
 import { Button, buttonVariants } from "../ui/button";
 import { NavLink, useLocation } from "react-router-dom";
-import WelcomeHeader from "../ui/WelcomeHeader";
+import LoginHeader from "../ui/LoginHeader";
 import { Input } from "../ui/input";
 import { Star } from "lucide-react";
 import ProfileHeader from "../ui/ProfileHeader";
 
-interface HeaderProps {
-
-}
+interface HeaderProps {}
 
 const Header: FC<HeaderProps> = () => {
-    const location = useLocation()
+  const location = useLocation();
 
-    const isLogin: boolean = true
+  const isLogin: boolean = !!localStorage.getItem("spotifyAuthToken");
     return (
         <header className="bg-neutral-900">
             <div className="container px-4 mt-4">
@@ -56,7 +54,7 @@ const Header: FC<HeaderProps> = () => {
                                     </p>
                                 </CardContent>
                             } else {
-                                return <WelcomeHeader />
+                                return <LoginHeader />
                             }
                         } else if (location.pathname.startsWith("/profile")) {
                             return <ProfileHeader />
