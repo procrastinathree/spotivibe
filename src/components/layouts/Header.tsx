@@ -7,15 +7,16 @@ import { Input } from "../ui/input";
 import { Star } from "lucide-react";
 import ProfileHeader from "../ui/ProfileHeader";
 
-interface HeaderProps {}
+
+interface HeaderProps { }
 
 const Header: FC<HeaderProps> = () => {
-  const location = useLocation();
+    const location = useLocation();
+    const isLogin: boolean = !!localStorage.getItem("spotifyAuthToken")
 
-  const isLogin: boolean = !!localStorage.getItem("spotifyAuthToken");
     return (
-        <header className="bg-neutral-900">
-            <div className="container px-4 mt-4">
+        <header className="relative overflow-hidden bg-neutral-900">
+            <div className="container z-50 px-4 mt-4">
                 <CardHeader className="flex flex-row items-center justify-between">
                     <CardTitle>
                         <NavLink to="/">
@@ -27,8 +28,8 @@ const Header: FC<HeaderProps> = () => {
                         <div className="flex items-center gap-2">
                             <Input type="search" placeholder="Search..." className="dark text-neutral-300" />
                             <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">My Profile</NavLink>
-                            <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Settings</NavLink>
-                            <NavLink className={buttonVariants({ variant: "ghost" })} to="/profile">Account</NavLink>
+                            <NavLink className={buttonVariants({ variant: "ghost" })} to="/settings">Settings</NavLink>
+                            <NavLink className={buttonVariants({ variant: "ghost" })} to="/account">Account</NavLink>
                         </div>
                         :
                         <div className="flex gap-2">
