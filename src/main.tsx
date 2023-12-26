@@ -9,6 +9,7 @@ import ProtectedRoute from './components/HOC/ProtectedRoute';
 import HomePage from './pages/Home';
 import NotFound404 from './pages/NotFound';
 import ProfilePage from './pages/Profile';
+import AccountPage from './pages/Account';
 
 const container = document.getElementById('root');
 
@@ -18,14 +19,14 @@ if (container) {
     <React.StrictMode>
       <Router>
         <Routes>
-          {/* Protected Route */}
-          <Route path="/profile" element={<ProtectedRoute><Layout><ProfilePage /></Layout></ProtectedRoute>} />
-
-
           {/* Available Public Route */}
           <Route path="/" element={<Layout>
             <HomePage />
           </Layout>} />
+
+          {/* Protected Route */}
+          <Route path="/profile" element={<ProtectedRoute><Layout><ProfilePage /></Layout></ProtectedRoute>} />
+          <Route path="/account" element={<ProtectedRoute><Layout><AccountPage /></Layout></ProtectedRoute>} />
 
           {/* Non Routeable */}
           <Route path="*" element={<Layout><NotFound404 /></Layout>} />
