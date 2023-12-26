@@ -14,18 +14,18 @@
 
 ## Features
 
-SpotiVibe offers the following features:
+`Spotivibe` offers the following features:
 
 - **Playlist Creation**: Create custom playlists based on your music preferences and favorite tracks.
 - **Spotify Activity Tracker**: Keep track of your listening habits and get insights into your music choices.
 - **Spotify API Integration**: Access Spotify's vast music library and user data.
 - **User Authentication**: Securely log in with your Spotify account.
-- **User Profile**: View and manage your SpotiVibe user profile.
+- **User Profile**: View and manage your `Spotivibe` user profile.
 - **And More**: Explore and discover other exciting functionalities!
 
 ## Getting Started
 
-Follow these steps to set up SpotiVibe on your local machine.
+Follow these steps to set up `Spotivibe` on your local machine.
 
 ### Prerequisites
 
@@ -37,7 +37,7 @@ Follow these steps to set up SpotiVibe on your local machine.
 1 . Clone the repository:
 
    ```bash
-   git clone https://github.com/yourusername/spotivibe.git
+   git clone https://github.com/procrastinathree/spotivibe.git
    cd spotivibe
    ```
 2 . Install the required dependencies:
@@ -63,7 +63,7 @@ Follow these steps to set up SpotiVibe on your local machine.
 
 1 . Open your web browser and navigate to `http://localhost:5173`
 
-2 . Log in with your Spotify account to start using `spotivibe`
+2 . Log in with your Spotify account to start using `Spotivibe`
 
 3 . Explore the features, create playlists, and track your Spotify activity!
 
