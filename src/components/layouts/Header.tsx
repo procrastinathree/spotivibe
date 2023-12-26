@@ -56,11 +56,11 @@ const Header: FC<HeaderProps> = () => {
                             } else {
                                 return <LoginHeader />
                             }
-                        } else if (location.pathname === "/profile") {
+                        } else if (location.pathname.startsWith("/profile")) {
                             return <ProfileHeader />
                         }
                         else {
-                            return <h1>Settings</h1>
+                            return ""
                         }
                     }
                 )()}
