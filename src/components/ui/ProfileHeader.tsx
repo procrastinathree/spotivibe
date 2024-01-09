@@ -1,5 +1,5 @@
 import { FC } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useLocation } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { buttonVariants } from "./button";
 import { useQuery } from "@tanstack/react-query";
@@ -7,13 +7,16 @@ import axios from "axios";
 import SpotifyIcon from "../icons/SpotifyIcon";
 import { useToast } from "./use-toast";
 import { ToastAction } from "./toast";
+import Cookies from "js-cookie";
+import { cx } from "class-variance-authority";
 
 interface ProfileHeaderProps {
 
 }
 
 const ProfileHeader: FC<ProfileHeaderProps> = () => {
-    const token = localStorage.getItem("spotifyAuthToken")
+    const token = Cookies.get("spotifyAuthToken")
+    const location = useLocation()
     const { toast } = useToast()
     const { data: CurrentUser, error: CurrentUserError } = useQuery({
         queryKey: ['CurrentUser'],
@@ -75,12 +78,15 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                     </div>
                 </div>
                 <div className="flex">
-                    <NavLink className={buttonVariants({ variant: "link" })} to="/profile">Overview</NavLink>
-                    <NavLink className={buttonVariants({ variant: "link" })} to="/profile/songs">Songs</NavLink>
-                    <NavLink className={buttonVariants({ variant: "link" })} to="/profile/artists">Artists</NavLink>
-                    <NavLink className={buttonVariants({ variant: "link" })} to="/profile/albums">Albums</NavLink>
-                    <NavLink className={buttonVariants({ variant: "link" })} to="/profile/genres">Genres</NavLink>
-                    <NavLink className={buttonVariants({ variant: "link" })} to="/profile/labels">Labels</NavLink>
+                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-primary font-bold", {
+                        'bg-neutral-950 ease-out duration-300': location.pathname === "/profile"
+                    })} to="/profile">Overview</NavLink>
+                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-primary font-bold", {
+                        'bg-neutral-950 ease-out duration-300': location.pathname === "/profile/songs"
+                    })} to="/profile/songs">Songs</NavLink>
+                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-primary font-bold", {
+                        'bg-neutral-950 ease-out duration-300': location.pathname === "/profile/artists"
+                    })} to="/profile/artists">Artists</NavLink>
                 </div>
             </div>
         </div>

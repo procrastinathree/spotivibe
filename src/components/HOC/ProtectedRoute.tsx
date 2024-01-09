@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { Navigate, useLocation } from 'react-router-dom';
+import Cookies from 'js-cookie'
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -17,23 +18,24 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
     if (urlToken) {
       console.log('Route: Token found');
-      localStorage.setItem('spotifyAuthToken', urlToken);
+      Cookies.set("spotifyAuthToken", urlToken, { expires: 1 / 24 })
+
       setToken(urlToken);
     } else {
       console.log('route: check storage');
-      const storedToken = localStorage.getItem('spotifyAuthToken');
-      setToken(storedToken);
+      const storedToken = Cookies.get("spotifyAuthToken")
+      setToken(storedToken || "");
     }
     setIsLoading(false);
   }, [location.hash]);
 
   if (isLoading) {
-    console.log('Route: check token'); 
+    console.log('Route: check token');
     return <div>Loading...</div>;
   }
 
   if (token === null) {
-    console.log('Route: if token null, just throw haha'); 
+    console.log('Route: if token null, just throw haha');
     return <Navigate to="/" replace />;
   }
 

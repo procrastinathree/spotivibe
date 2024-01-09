@@ -9,14 +9,15 @@ import ProfileHeader from "../ui/ProfileHeader";
 import backgroundImg from '../../assets/images/background.jpg';
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
+import Cookies from "js-cookie";
 
 interface HeaderProps { }
 
 const Header: FC<HeaderProps> = () => {
     const location = useLocation();
-    const isLogin: boolean = !!localStorage.getItem("spotifyAuthToken");
+    const isLogin: boolean = !!Cookies.get("spotifyAuthToken");
 
-    const token = localStorage.getItem("spotifyAuthToken");
+    const token = Cookies.get("spotifyAuthToken");
     const { data: CurrentUser } = useQuery({
         queryKey: ['CurrentUser'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
@@ -24,10 +25,7 @@ const Header: FC<HeaderProps> = () => {
 
     return (
         <header
-            className="relative overflow-hidden bg-center bg-cover"
-            style={{
-                backgroundImage: `linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url(${backgroundImg})`,
-            }}
+            className="relative overflow-hidden bg-center bg-cover bg-neutral-900"
         >
             <div className="container z-50 px-4 mt-4">
                 <CardHeader className="flex flex-row items-center justify-between">

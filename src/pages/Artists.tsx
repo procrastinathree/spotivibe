@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import Cookies from "js-cookie";
 import { FC, useState } from "react";
 
 
@@ -12,7 +13,7 @@ interface ArtistsPageProps {
 }
 
 const ArtistsPage: FC<ArtistsPageProps> = () => {
-    const token = localStorage.getItem("spotifyAuthToken")
+    const token = Cookies.get("spotifyAuthToken")
     const [timeRange, setTimeRange] = useState<string>("long_term")
 
     const { data, refetch } = useQuery({
