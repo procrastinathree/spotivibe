@@ -79,7 +79,7 @@ const TopArtistsList: FC = () => {
                         'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
                         'bg-gradient-to-r from-[#CD7F32]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#CD7F32]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 2,
                     })} key={index}>
-                        <span className="w-5 font-semibold text-neutral-500">{index + 1}</span>
+                        <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
                         <Avatar className="rounded-sm">
                             <AvatarImage src={item.image} />
                             <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>

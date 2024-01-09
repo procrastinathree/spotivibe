@@ -2,8 +2,10 @@ import { TopArtist } from "@/components/profile/TopArtists";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { Separator } from "@/components/ui/separator";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
+import { cx } from "class-variance-authority";
 import Cookies from "js-cookie";
 import { FC, useState } from "react";
 
@@ -62,13 +64,18 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                     </CardHeader>
                     <CardContent className="flex flex-col gap-4">
                         {TopArtist.map((item: TopArtist, index: number) => (
-                            <div className="flex items-center gap-4" key={index}>
-                                <span className="font-semibold text-neutral-500">{index + 1}</span>
-                                <Avatar>
+                            <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
+                                'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
+                                'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
+                                'bg-gradient-to-r from-[#CD7F32]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#CD7F32]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 2,
+                            })} key={index}>
+                                <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
+                                <Avatar className="rounded-sm">
                                     <AvatarImage src={item.image} />
                                     <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>
                                 </Avatar>
-                                <a href={item.url} target="_blank" className="font-bold hover:underline text-neutral-100" key={item.name}>{item.name}</a>
+                                <span className="font-bold text-neutral-100">{item.name}</span>
+                                <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
                             </div>
                         ))}
                     </CardContent>

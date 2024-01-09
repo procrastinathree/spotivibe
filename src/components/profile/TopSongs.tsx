@@ -13,6 +13,9 @@ export type TopSongs = {
     name: string;
     image: string
     url: string;
+    duration: number;
+    release_date: string;
+    popularity: number;
     artists: { name: string }[]
 }
 
@@ -24,12 +27,6 @@ const TopSongsList: FC = () => {
         queryKey: ["TopSongs"],
         queryFn: async () => {
             const data = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=10`, { headers: { Authorization: `Bearer ${token}` } })
-            TopSongs = data?.data.items
-                .map((item: any) => ({
-                    name: item.name,
-                    image: item.album.images[2].url,
-                    url: item.external_urls.spotify
-                }))
             return data
         }
     })
@@ -86,7 +83,7 @@ const TopSongsList: FC = () => {
                         'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
                         'bg-gradient-to-r from-[#CD7F32]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#CD7F32]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 2,
                     })} key={index}>
-                        <span className="w-5 font-semibold text-neutral-500">{index + 1}</span>
+                        <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
                         <Avatar>
                             <AvatarImage src={item.image} />
                             <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>
@@ -98,7 +95,7 @@ const TopSongsList: FC = () => {
                                     <div className="flex gap-2" key={artist.name}>
                                         <a href={artist.url} target="_blank" className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary " key={artist.name}>{artist.name}</a>
                                         {index !== array.length - 1 ?
-                                            <Separator orientation="vertical" key={artist.name} /> :
+                                            <Separator orientation="vertical" className="dark" key={artist.name} /> :
                                             ""
                                         }
                                     </div>

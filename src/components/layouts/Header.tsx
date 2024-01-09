@@ -47,23 +47,31 @@ const Header: FC<HeaderProps> = () => {
                                 className="dark text-neutral-300"
                             />
                             <NavLink
-                                className={buttonVariants({ variant: "ghost" })}
+                                className={location.pathname === "/profile" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
                                 to="/profile"
                             >
                                 My Profile
                             </NavLink>
                             <NavLink
-                                className={buttonVariants({ variant: "ghost" })}
+                                className={location.pathname === "/settings" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
                                 to="/settings"
                             >
                                 Settings
                             </NavLink>
                             <NavLink
-                                className={buttonVariants({ variant: "ghost" })}
+                                className={location.pathname === "/account" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
                                 to="/account"
                             >
                                 Account
                             </NavLink>
+                            <Button
+                                type="button"
+                                variant={"secondary"}
+                                className="flex gap-2 dark"
+                            >
+                                <Star size={16} />
+                                Star us on GitHub
+                            </Button>
                         </div>
                     ) : (
                         <div className="flex gap-2">
@@ -75,7 +83,7 @@ const Header: FC<HeaderProps> = () => {
                             <Button
                                 type="button"
                                 variant={"secondary"}
-                                className="flex gap-2"
+                                className="flex gap-2 dark"
                             >
                                 <Star size={16} />
                                 Star us on GitHub
