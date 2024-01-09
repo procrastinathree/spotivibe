@@ -62,6 +62,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                             </span>
                         </a>
                         <span className="font-semibold text-primary-foreground">{CurrentUser?.data.followers.total} Followers</span>
+                        <h3 className="mt-6 text-sm font-bold text-primary-foreground">Playing on Spotify</h3>
                         {CurrentTrack?.data ?
                             <div className="flex items-center gap-4 px-4 py-2 rounded-lg bg-primary">
                                 <Avatar>
@@ -70,7 +71,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                                 </Avatar>
                                 <div className="flex flex-col">
                                     <a target="_blank" href={CurrentTrack?.data.item.external_urls.spotify} className="text-base font-semibold hover:underline text-primary-foreground">{CurrentTrack?.data.item.name}</a>
-                                    <a target="_blank" href={CurrentTrack?.data.item.artists[0].external_urls.spotify} className="text-base font-semibold hover:underline text-neutral-800">{CurrentTrack?.data.item.artists[0].name}</a>
+                                    <a target="_blank" href={CurrentTrack?.data.item.artists[0].external_urls.spotify} className="text-base font-semibold hover:underline text-neutral-300">{CurrentTrack?.data.item.artists[0].name}</a>
                                 </div>
                             </div>
                             : ""
