@@ -11,6 +11,8 @@ import Cookies from "js-cookie";
 export type TopArtist = {
     name: string;
     image: string;
+    image_hd?: string;
+    popularity: number;
     url: string;
 }
 

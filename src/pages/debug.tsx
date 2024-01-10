@@ -14,10 +14,11 @@ const DebugPage: FC<DebugPageProps> = () => {
     const { data, refetch } = useQuery({
         queryKey: ["TopSongs"],
         queryFn: async () => {
-            const data = await axios.get(`https://api.spotify.com/v1/me/top/artists`, { headers: { Authorization: `Bearer ${token}` } })
+            const data = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=100&offset=50`, { headers: { Authorization: `Bearer ${token}` } })
             return data
         },
     })
+    console.log(data?.data.items.length)
 
     return <div className="text-xl bg-slate-100">
         <pre>

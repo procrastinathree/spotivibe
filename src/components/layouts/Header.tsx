@@ -64,14 +64,14 @@ const Header: FC<HeaderProps> = () => {
                             >
                                 Account
                             </NavLink>
-                            <Button
-                                type="button"
-                                variant={"secondary"}
-                                className="flex gap-2 dark"
+                            <a
+                                href="https://github.com/procrastinathree/spotivibe"
+                                target="_blank"
+                                className={buttonVariants({ variant: "secondary", className: "dark flex gap-2" })}
                             >
                                 <Star size={16} />
                                 Star us on GitHub
-                            </Button>
+                            </a>
                         </div>
                     ) : (
                         <div className="flex gap-2">
@@ -80,14 +80,14 @@ const Header: FC<HeaderProps> = () => {
                                 placeholder="Search..."
                                 className="dark text-neutral-300"
                             />
-                            <Button
-                                type="button"
-                                variant={"secondary"}
-                                className="flex gap-2 dark"
+                            <a
+                                href="https://github.com/procrastinathree/spotivibe"
+                                target="_blank"
+                                className={buttonVariants({ variant: "secondary", className: "dark flex gap-2" })}
                             >
                                 <Star size={16} />
                                 Star us on GitHub
-                            </Button>
+                            </a>
                         </div>
                     )}
                 </CardHeader>

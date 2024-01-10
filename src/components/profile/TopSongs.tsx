@@ -15,6 +15,7 @@ export type TopSongs = {
     url: string;
     duration: number;
     release_date: string;
+    image_hd?: string;
     popularity: number;
     artists: { name: string }[]
 }

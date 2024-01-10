@@ -33,6 +33,7 @@ const SongsPage: FC<SongsPageProps> = () => {
             .map((item: any) => ({
                 name: item.name,
                 image: item.album.images[2].url,
+                image_hd: item.album.images[1].url,
                 duration: item.duration_ms,
                 release_date: item.album.release_date,
                 popularity: item.popularity,
@@ -124,11 +125,11 @@ const SongsPage: FC<SongsPageProps> = () => {
                             </Select>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex gap-4">
+                    <CardContent className="flex gap-6">
                         <div className="flex flex-row w-1/4 gap-2">
                             {TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
                                 <a href={item.url} target="_blank" className='relative w-40 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
-                                    <img src={item.image} className="object-cover w-full h-full rounded-lg" alt={item.name} />
+                                    <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
                                     <span className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
                                         "text-[#FFD700]/50": index === 0,
                                         "text-[#C0C0C0]/50": index === 1,
@@ -205,7 +206,7 @@ const SongsPage: FC<SongsPageProps> = () => {
                                 </Avatar>
                                 <div className="flex items-center justify-between w-full">
                                     <div className="flex flex-col gap-2">
-                                        <span className="font-bold text-neutral-100">{item.name} {item.popularity}</span>
+                                        <span className="font-bold text-neutral-100">{item.name}</span>
                                         <div className="flex gap-2">{
                                             item.artists.map((artist: any, index: number, array) => (
                                                 <div className="flex gap-2" key={index}>

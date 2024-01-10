@@ -9,6 +9,8 @@ import { useToast } from "./use-toast";
 import { ToastAction } from "./toast";
 import Cookies from "js-cookie";
 import { cx } from "class-variance-authority";
+import { Progress } from "./progress";
+import { Separator } from "./separator";
 
 interface ProfileHeaderProps {
 
@@ -49,12 +51,10 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
     return (
         <div className="flex justify-between mt-8">
             <div className="flex flex-col flex-grow gap-8">
-                <div className="flex justify-between">
-                    <div className="flex items-end">
-                        <img src={CurrentUser?.data.images[1].url} alt="profile photo" className="w-40 h-40 border-4 rounded-full border-neutral-100 bg-neutral-950 text-neutral-500" />
-                        <h1 className="px-4 text-4xl font-bold text-primary-foreground">{CurrentUser?.data.display_name ?? ""}</h1>
-                    </div>
-                    <div className="flex flex-col items-end gap-2 px-4">
+                <div className="flex items-start gap-8 h-52">
+                    <img src={CurrentUser?.data.images[1].url} alt="profile photo" className="w-40 h-40 border-4 rounded-full border-neutral-100 bg-neutral-950 text-neutral-500" />
+                    <div className="flex flex-col items-start gap-2">
+                        <h1 className="text-4xl font-bold text-primary-foreground">{CurrentUser?.data.display_name ?? ""}</h1>
                         <a target="_blank" href={CurrentUser?.data.external_urls.spotify} className="flex items-center gap-2 font-semibold hover:text-primary text-primary-foreground">
                             <SpotifyIcon size={16} />
                             <span>
@@ -62,7 +62,6 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                             </span>
                         </a>
                         <span className="font-semibold text-primary-foreground">{CurrentUser?.data.followers.total} Followers</span>
-                        <h3 className="mt-6 text-sm font-bold text-primary-foreground">Playing on Spotify</h3>
                         {CurrentTrack?.data ?
                             <div className="flex items-center gap-4 px-4 py-2 rounded-lg bg-primary">
                                 <Avatar>
@@ -71,7 +70,17 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                                 </Avatar>
                                 <div className="flex flex-col">
                                     <a target="_blank" href={CurrentTrack?.data.item.external_urls.spotify} className="text-base font-semibold hover:underline text-primary-foreground">{CurrentTrack?.data.item.name}</a>
-                                    <a target="_blank" href={CurrentTrack?.data.item.artists[0].external_urls.spotify} className="text-base font-semibold hover:underline text-neutral-300">{CurrentTrack?.data.item.artists[0].name}</a>
+                                    <div className="flex gap-2">{
+                                        CurrentTrack?.data.item.artists.map((artist: any, index: number, array: any) => (
+                                            <div className="flex gap-2" key={artist.name}>
+                                                <a href={artist.external_urls.spotify} target="_blank" className="z-10 font-bold rounded-lg text-neutral-950 hover:underline" key={artist.name}>{artist.name}</a>
+                                                {index !== array.length - 1 ?
+                                                    <Separator orientation="vertical" className="dark" key={artist.name} /> :
+                                                    ""
+                                                }
+                                            </div>
+                                        ))
+                                    }</div>
                                 </div>
                             </div>
                             : ""
