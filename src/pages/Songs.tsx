@@ -95,13 +95,13 @@ const SongsPage: FC<SongsPageProps> = () => {
 
     return (
         <div className="flex flex-col gap-8">
-            <div className="flex gap-8">
-                <Card className="flex flex-col w-full gap-6">
-                    <CardHeader className="flex flex-row items-center justify-between">
-                        <CardTitle className="font-bold">Top Songs</CardTitle>
-                        <div className="flex gap-4">
+            <div className="flex flex-col lg:flex-row gap-8">
+                <Card className="flex flex-col w-full lg:w-2/3 gap-6">
+                    <CardHeader className="flex flex-col sm:flex-row items-center justify-between">
+                        <CardTitle className="font-bold mb-4 md:mb-0">Top Songs</CardTitle>
+                        <div className="flex flex-col sm:flex-row gap-4"> {/* Step 1 */}
                             <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange}>
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger className="w-full sm:w-[180px]"> {/* Step 2 */}
                                     <SelectValue placeholder={timeRange.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -111,7 +111,7 @@ const SongsPage: FC<SongsPageProps> = () => {
                                 </SelectContent>
                             </Select>
                             <Select onValueChange={handleSortByChange} defaultValue={sortBy}>
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger className="w-full sm:w-[180px]"> {/* Step 2 */}
                                     <SelectValue placeholder={sortBy.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -126,86 +126,102 @@ const SongsPage: FC<SongsPageProps> = () => {
                             </Select>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex gap-6">
-                        <div className="flex flex-row w-1/4 gap-2">
+                    <CardContent className="flex flex-col lg:flex-row gap-6">
+                        <div className="flex flex-row w-full lg:w-1/2 gap-2">
                             {isPending ?
                                 <div className="flex items-center justify-center w-full">
                                     <SpinnerLoader />
                                 </div> :
                                 TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
-                                    <a href={item.url} target="_blank" className='relative w-40 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
+                                    <a
+                                        href={item.url}
+                                        target="_blank"
+                                        className="relative w-full duration-200 ease-out drop-shadow-lg hover:scale-[1.02]"
+                                        key={item.name}
+                                    >
                                         <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
-                                        <span className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
-                                            "text-[#FFD700]/50": index === 0,
-                                            "text-[#C0C0C0]/50": index === 1,
-                                            "text-[#CD7F32]/50": index === 2,
-                                        })}>{index + 1}</span>
+                                        <span
+                                            className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
+                                                "text-[#FFD700]/50": index === 0,
+                                                "text-[#C0C0C0]/50": index === 1,
+                                                "text-[#CD7F32]/50": index === 2,
+                                            })}
+                                        >
+                                            {index + 1}
+                                        </span>
                                     </a>
                                 ))}
                         </div>
-                        <Card className="w-1/4 bg-background">
+                        <Card className="w-full lg:w-1/4 bg-background">
                             <CardHeader>
-                                <CardTitle>By Popularity</CardTitle>
+                                <CardTitle className="font-bold">By Popularity</CardTitle>
                             </CardHeader>
-                            {isPending ?
-                                <CardContent className="flex items-center justify-center"><SpinnerLoader /></CardContent>
-                                :
+                            {isPending ? (
+                                <CardContent className="flex items-center justify-center">
+                                    <SpinnerLoader />
+                                </CardContent>
+                            ) : (
                                 <CardContent className="flex flex-col gap-2">
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-24 text-base">Obscure</CardTitle>
-                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity <= 50).length * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-24 text-base overflow-hidden overflow-ellipsis">Obscure</CardTitle> {/* Step 3 */}
+                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity <= 50).length * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-24 text-base">Average</CardTitle>
-                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity < 80 && songs.popularity > 50).length * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-24 text-base overflow-hidden overflow-ellipsis">Average</CardTitle> {/* Step 3 */}
+                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity < 80 && songs.popularity > 50).length * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-24 text-base">Obscure</CardTitle>
-                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity >= 80).length * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-24 text-base overflow-hidden overflow-ellipsis">Highly Popular</CardTitle> {/* Step 3 */}
+                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity >= 80).length * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                 </CardContent>
-                            }
+                            )}
                         </Card>
-                        <Card className="w-1/4 bg-background">
+                        <Card className="w-full lg:w-1/4 bg-background">
                             <CardHeader>
-                                <CardTitle>By Decade</CardTitle>
+                                <CardTitle className="font-bold">By Decade</CardTitle>
                             </CardHeader>
-                            {isPending ? <CardContent className="flex items-center justify-center"><SpinnerLoader /></CardContent>
-                                :
+                            {isPending ? (
+                                <CardContent className="flex items-center justify-center">
+                                    <SpinnerLoader />
+                                </CardContent>
+                            ) : (
                                 <CardContent className="flex flex-col gap-2">
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-20 text-base">2020s</CardTitle>
-                                        <Progress value={countByDecade(2020, TopSongs) * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-20 text-base overflow-hidden overflow-ellipsis">2020s</CardTitle> {/* Step 3 */}
+                                        <Progress value={countByDecade(2020, TopSongs) * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-20 text-base">2010s</CardTitle>
-                                        <Progress value={countByDecade(2010, TopSongs) * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-20 text-base overflow-hidden overflow-ellipsis">2010s</CardTitle> {/* Step 3 */}
+                                        <Progress value={countByDecade(2010, TopSongs) * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-20 text-base">2000s</CardTitle>
-                                        <Progress value={countByDecade(2000, TopSongs) * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-20 text-base overflow-hidden overflow-ellipsis">2000s</CardTitle> {/* Step 3 */}
+                                        <Progress value={countByDecade(2000, TopSongs) * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                 </CardContent>
-                            }
+                            )}
                         </Card>
-                        <Card className="w-1/4 bg-background">
+                        <Card className="w-full lg:w-1/4 bg-background">
                             <CardHeader>
-                                <CardTitle>By Length</CardTitle>
+                                <CardTitle className="font-bold">By Length</CardTitle>
                             </CardHeader>
-                            {isPending ?
-                                <CardContent className="flex items-center justify-center"><SpinnerLoader /></CardContent>
-                                :
+                            {isPending ? (
+                                <CardContent className="flex items-center justify-center">
+                                    <SpinnerLoader />
+                                </CardContent>
+                            ) : (
                                 <CardContent className="flex flex-col gap-2">
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-16 text-base text-end">-4min</CardTitle>
-                                        <Progress value={countItemsByDuration(TopSongs, 4).lessThanOrEqualThreshold * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-16 text-base text-end overflow-hidden overflow-ellipsis">-4min</CardTitle> {/* Step 2 */}
+                                        <Progress value={countItemsByDuration(TopSongs, 4).lessThanOrEqualThreshold * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 1 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-16 text-base text-end">4m+</CardTitle>
-                                        <Progress value={countItemsByDuration(TopSongs, 4).greaterThanOrEqualThreshold * 2} className="h-2" />
+                                        <CardTitle className="w-1/2 lg:w-16 text-base text-end overflow-hidden overflow-ellipsis">4m+</CardTitle> {/* Step 2 */}
+                                        <Progress value={countItemsByDuration(TopSongs, 4).greaterThanOrEqualThreshold * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 1 */}
                                     </div>
                                 </CardContent>
-                            }
+                            )}
                         </Card>
                     </CardContent>
                     <CardContent className="flex flex-col gap-4">
@@ -227,12 +243,19 @@ const SongsPage: FC<SongsPageProps> = () => {
                                     </Avatar>
                                     <div className="flex items-center justify-between w-full">
                                         <div className="flex flex-col gap-2">
-                                            <span className="font-bold text-neutral-100">{item.name}</span>
+                                            <span className="font-bold text-neutral-100 overflow-hidden overflow-ellipsis max-w-[200px]">{item.name}</span>
                                             <div className="flex gap-2">{
                                                 item.artists.map((artist: any, index: number, array) => (
                                                     <div className="flex gap-2" key={index}>
-                                                        <a href={artist.url} target="_blank" className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary " key={artist.name}>{artist.name}</a>
-                                                        {index !== array.length - 1 ?
+                                                        <a
+                                                            href={artist.url}
+                                                            target="_blank"
+                                                            className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary overflow-hidden overflow-ellipsis overflow-x-hidden max-w-[100px]"
+                                                            key={artist.name}
+                                                            style={{ whiteSpace: 'pre-wrap', maxWidth: '100px' }}
+                                                        >
+                                                            {artist.name}
+                                                        </a>                                                        {index !== array.length - 1 ?
                                                             <Separator orientation="vertical" className="dark" /> :
                                                             ""
                                                         }
@@ -243,9 +266,7 @@ const SongsPage: FC<SongsPageProps> = () => {
                                         <div className="p-2">
                                             {sortBy.startsWith("length") ? <span className="font-bold text-neutral-100">{formatDuration(item.duration)}</span> :
                                                 sortBy.startsWith("popularity") ? <Progress className="w-32 h-2" value={item.popularity} /> :
-                                                    sortBy.startsWith("release") ? <span className="font-bold text-neutral-100">{item.release_date}</span> : ""
-                                            }
-
+                                                    sortBy.startsWith("release") ? <span className="font-bold text-neutral-100 overflow-hidden overflow-ellipsis max-w-[100px]">{item.release_date}</span> : ""}
                                         </div>
                                     </div>
                                     <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>

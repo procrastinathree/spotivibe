@@ -64,8 +64,8 @@ const AccountPage: FC<AccountPageProps> = () => {
         <div className="flex flex-col gap-8">
             <Card className="overflow-hidden">
                 <div className="flex">
-                    <div className="p-4 bg-primary">
-                        <img src={CurrentUser?.data.images[1].url} className="rounded-lg w-52" alt="" />
+                    <div className="ml-4 mt-8 md:p-4 md:ml-0 md:mt-0">
+                        <img src={CurrentUser?.data.images[1].url} className="rounded-lg w-40" alt="Spotify Profile Photo" />
                     </div>
                     <div className="flex flex-col">
                         <CardHeader>
