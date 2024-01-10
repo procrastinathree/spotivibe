@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useQuery } from "@tanstack/react-query";
@@ -28,12 +29,11 @@ const AccountPage: FC<AccountPageProps> = () => {
         if (urlToken) {
             Cookies.set('spotifyAuthToken', urlToken);
             setToken(urlToken);
-            console.log('ProfilePage: save to local storage');
             window.history.replaceState({}, document.title, "/profile");
         }
     }, [navigate]);
 
-    const { data: CurrentUser, error: CurrentUserError } = useQuery({
+    const { data: CurrentUser, error: CurrentUserError, isLoading: CurrentUserLoading } = useQuery({
         queryKey: ['CurrentUser'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
     })
@@ -57,7 +57,6 @@ const AccountPage: FC<AccountPageProps> = () => {
 
     const handleLogout = () => {
         console.log('ProfilePage: Log Out...');
-        localStorage.removeItem('spotifyAuthToken');
         Cookies.remove('spotifyAuthToken')
         navigate('/');
     };
@@ -65,10 +64,12 @@ const AccountPage: FC<AccountPageProps> = () => {
     return (
         <div className="flex flex-col gap-8">
             <Card className="overflow-hidden">
-                <div className="flex">
-                    <div className="ml-4 mt-8 md:p-4 md:ml-0 md:mt-0">
-                        <img src={CurrentUser?.data.images[1].url} className="rounded-lg w-40" alt="Spotify Profile Photo" />
-                    </div>
+                <div className="flex flex-col md:flex-row">
+                    {CurrentUserLoading ?
+                        <Skeleton className="w-full rounded-lg md:w-48 h-60 dark" />
+                        :
+                        <img src={CurrentUser?.data.images[1].url} className="object-cover w-full rounded-lg md:w-48 h-60" alt="Spotify Profile Photo" />
+                    }
                     <div className="flex flex-col">
                         <CardHeader>
                             <CardTitle>Spotify Account</CardTitle>
@@ -77,11 +78,19 @@ const AccountPage: FC<AccountPageProps> = () => {
                         <CardContent className="flex flex-col gap-4">
                             <div className="flex flex-col">
                                 <CardDescription>Username</CardDescription>
-                                <a href={CurrentUser?.data.external_urls.spotify} target="_blank" className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.id}</a>
+                                {CurrentUserLoading ?
+                                    <Skeleton className="h-6 mt-1 w-60" />
+                                    :
+                                    <a href={CurrentUser?.data.external_urls.spotify} target="_blank" className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.id}</a>
+                                }
                             </div>
                             <div className="flex flex-col gap-2">
                                 <CardDescription>Email</CardDescription>
-                                <span className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.email}</span>
+                                {CurrentUserLoading ?
+                                    <Skeleton className="w-48 h-6 mt-1" />
+                                    :
+                                    <span className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.email}</span>
+                                }
                             </div>
                         </CardContent>
                     </div>

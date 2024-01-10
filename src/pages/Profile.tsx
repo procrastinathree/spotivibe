@@ -4,9 +4,10 @@ import Taste from '@/components/profile/Taste';
 
 import { FC, useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import Cookies from 'js-cookie';
 
 const ProfilePage: FC = () => {
-  const [token, setToken] = useState<string | null>(localStorage.getItem('spotifyAuthToken'));
+  const [token, setToken] = useState<string | null>(Cookies.get('spotifyAuthToken') as string);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -18,7 +19,7 @@ const ProfilePage: FC = () => {
     console.log('ProfilePage: Extracted Token:', urlToken);
 
     if (urlToken) {
-      localStorage.setItem('spotifyAuthToken', urlToken);
+      Cookies.set('spotifyAuthToken', urlToken);
       setToken(urlToken);
       console.log('ProfilePage: save to local storage');
       window.history.replaceState({}, document.title, "/profile");
