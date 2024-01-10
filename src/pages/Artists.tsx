@@ -63,7 +63,7 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
     return (
         <div className="flex flex-col gap-8">
             <div className="flex gap-8">
-                <Card className="w-full">
+                <Card className="flex flex-col w-full gap-6">
                     <CardHeader className="flex flex-row items-center justify-between">
                         <CardTitle className="font-bold">Top Artists</CardTitle>
                         <div className="flex gap-4">
