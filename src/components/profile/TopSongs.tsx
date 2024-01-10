@@ -39,6 +39,7 @@ const TopSongsList: FC = () => {
         .map((item: any) => ({
             name: item.name,
             image: item.album.images[2].url,
+            image_hd:item.album.images[1].url,
             url: item.external_urls.spotify,
             artists: item.artists.map((item: any) => ({
                 name: item.name,
@@ -81,7 +82,7 @@ const TopSongsList: FC = () => {
                             '-translate-x-24 scale-90 z-10 hover:-translate-x-20 ease-out duration-300': index === 1,
                             '-translate-x-52 scale-75 hover:-translate-x-44 ease-out duration-300': index === 2,
                         })} key={item.name}>
-                            <img src={item.image} className="w-full rounded-full" alt={item.name} />
+                            <img src={item.image_hd} className="w-full rounded-full" alt={item.name} />
                         </a>
                     ))}
                 </CardContent>

@@ -50,12 +50,6 @@ const Header: FC<HeaderProps> = () => {
                                 My Profile
                             </NavLink>
                             <NavLink
-                                className={location.pathname === "/settings" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
-                                to="/settings"
-                            >
-                                Settings
-                            </NavLink>
-                            <NavLink
                                 className={location.pathname === "/account" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
                                 to="/account"
                             >
