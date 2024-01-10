@@ -1,20 +1,29 @@
-import { FC } from "react";
+import { FC, useEffect, useState } from "react";
 import { CardContent, CardHeader, CardTitle } from "../ui/card";
 import { buttonVariants } from "../ui/button";
 import { NavLink, useLocation } from "react-router-dom";
 import LoginHeader from "../ui/LoginHeader";
 import { Input } from "../ui/input";
-import { Star } from "lucide-react";
+import { AlignJustify, Star } from "lucide-react";
 import ProfileHeader from "../ui/ProfileHeader";
 import axios from "axios";
 import { useQuery } from "@tanstack/react-query";
 import Cookies from "js-cookie";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 
 interface HeaderProps { }
 
 const Header: FC<HeaderProps> = () => {
     const location = useLocation();
     const isLogin: boolean = !!Cookies.get("spotifyAuthToken");
+    const [isMinWidth640, setIsMinWidth640] = useState<boolean>(false);
 
     const token = Cookies.get("spotifyAuthToken");
     const { data: CurrentUser, isPending } = useQuery({
@@ -22,10 +31,29 @@ const Header: FC<HeaderProps> = () => {
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
     });
 
+    useEffect(() => {
+        const mediaQuery = window.matchMedia('(max-width: 768px)');
+
+        const handleMediaQueryChange = (event: MediaQueryListEvent) => {
+            setIsMinWidth640(event.matches);
+        };
+
+        // Initial check
+        handleMediaQueryChange(mediaQuery as any);
+
+        // Add listener for changes
+        mediaQuery.addEventListener('change', handleMediaQueryChange);
+
+        // Cleanup on component unmount
+        return () => {
+            mediaQuery.removeEventListener('change', handleMediaQueryChange);
+        };
+    }, []);
+
     return (
         <header className="relative overflow-hidden bg-center bg-cover bg-neutral-900">
             <div className="container z-50 px-4 mt-4">
-                <CardHeader className="flex flex-col items-center justify-between md:flex-row">
+                <CardHeader className="flex-row justify-between flexitems-center">
                     <CardTitle>
                         <NavLink
                             to="/"
@@ -36,51 +64,76 @@ const Header: FC<HeaderProps> = () => {
                             <span className="text-primary-foreground">vibe</span>
                         </NavLink>
                     </CardTitle>
-                    {isLogin ? (
-                        <div className="flex flex-col items-center gap-2 mt-4 sm:flex-row md:mt-0">
-                            <Input
-                                type="search"
-                                placeholder="Search..."
-                                className="dark text-neutral-300"
-                            />
-                            <NavLink
-                                className={location.pathname === "/profile" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
-                                to="/profile"
-                            >
-                                My Profile
-                            </NavLink>
-                            <NavLink
-                                className={location.pathname === "/account" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
-                                to="/account"
-                            >
-                                Account
-                            </NavLink>
-                            <a
-                                href="https://github.com/procrastinathree/spotivibe"
-                                target="_blank"
-                                className={buttonVariants({ variant: "secondary", className: "dark flex gap-2" })}
-                            >
-                                <Star size={16} />
-                                Star us on GitHub
-                            </a>
-                        </div>
-                    ) : (
-                        <div className="flex gap-2">
-                            <Input
-                                type="search"
-                                placeholder="Search..."
-                                className="dark text-neutral-300"
-                            />
-                            <a
-                                href="https://github.com/procrastinathree/spotivibe"
-                                target="_blank"
-                                className={buttonVariants({ variant: "secondary", className: "dark flex gap-2" })}
-                            >
-                                <Star size={16} />
-                                Star us on GitHub
-                            </a>
-                        </div>
-                    )}
+                    <div className="flex gap-4">
+                        <Input
+                            type="search"
+                            placeholder="Search..."
+                            className="dark text-neutral-300 max-w-52" />
+                        {isLogin ? isMinWidth640 ?
+                            <DropdownMenu>
+                                <DropdownMenuTrigger className="dark">
+                                    <AlignJustify className="text-neutral-100" />
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent className="flex flex-col gap-2 dark" align="end">
+                                    <DropdownMenuItem>
+                                        <NavLink
+                                            className="w-full"
+                                            to="/profile">
+                                            My Profile
+                                        </NavLink>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <NavLink
+                                            className="w-full"
+                                            to="/account">
+                                            Account
+                                        </NavLink>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem>
+                                        <a
+                                            href="https://github.com/procrastinathree/spotivibe"
+                                            target="_blank"
+                                            className="flex items-center w-full gap-2 p-2">
+                                            <Star size={16} />
+                                            Star us on GitHub
+                                        </a>
+                                    </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu>
+
+                            : (
+                                <div className="flex flex-col items-center gap-2 mt-4 sm:flex-row md:mt-0">
+                                    <NavLink
+                                        className={location.pathname === "/profile" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
+                                        to="/profile">
+                                        My Profile
+                                    </NavLink>
+                                    <NavLink
+                                        className={location.pathname === "/account" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
+                                        to="/account">
+                                        Account
+                                    </NavLink>
+                                    <a
+                                        href="https://github.com/procrastinathree/spotivibe"
+                                        target="_blank"
+                                        className={buttonVariants({ variant: "secondary", className: "dark flex gap-2" })}>
+                                        <Star size={16} />
+                                        Star us on GitHub
+                                    </a>
+                                </div>
+                            ) : isMinWidth640 ? "keren" : (
+                                <div className="flex gap-2">
+                                    <a
+                                        href="https://github.com/procrastinathree/spotivibe"
+                                        target="_blank"
+                                        className={buttonVariants({ variant: "secondary", className: "dark flex gap-2" })}
+                                    >
+                                        <Star size={16} />
+                                        Star us on GitHub
+                                    </a>
+                                </div>
+                            )}
+                    </div>
                 </CardHeader>
                 {(() => {
                     if (location.pathname === "/") {

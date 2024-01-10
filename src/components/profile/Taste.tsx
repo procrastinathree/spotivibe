@@ -85,8 +85,8 @@ const Taste: FC = () => {
                     </SelectContent>
                 </Select>
             </CardHeader>
-            <CardContent className="flex flex-row gap-6">
-                <div className="flex flex-col w-1/3 gap-3">
+            <CardContent className="flex flex-col gap-6 lg:flex-row">
+                <div className="flex flex-col w-full lg:w-1/3">
                     <Card className="bg-background">
                         <CardHeader>
                             <CardTitle>By Decade</CardTitle>
@@ -121,8 +121,7 @@ const Taste: FC = () => {
                                 <Progress value={isPending ? 0 : countByDecade(1960, TopSongs) * 2} className="h-2" />
                             </div>
                         </CardContent>
-                    </Card>
-                    <Card className="bg-background">
+                        <Separator orientation="horizontal" className="dark" />
                         <CardHeader className="flex flex-col">
                             <CardTitle className="flex items-center gap-3 text-xl">Newest
                                 <span className="px-2 text-sm rounded-lg bg-neutral-800">{isPending ? "" : formatDistanceToNow(new Date(TopSongs?.reduce((acc, curr) => (new Date(curr.release_date) > new Date(acc.release_date)) ? curr : acc)?.release_date), { addSuffix: true })}</span>
@@ -153,8 +152,7 @@ const Taste: FC = () => {
                                 </div>
                             }
                         </CardHeader>
-                    </Card>
-                    <Card className="bg-background">
+                        <Separator className="dark" orientation="horizontal" />
                         <CardHeader className="flex flex-col">
                             <CardTitle className="flex items-center gap-3 text-xl">Oldest
                                 <span className="px-2 text-sm rounded-lg bg-neutral-800">{isPending ? "" : formatDistanceToNow(new Date(TopSongs?.reduce((acc, curr) => (new Date(curr.release_date) < new Date(acc.release_date)) ? curr : acc)?.release_date), { addSuffix: true })}</span>
@@ -187,7 +185,7 @@ const Taste: FC = () => {
                         </CardHeader>
                     </Card>
                 </div>
-                <div className="flex flex-col w-1/3 gap-3">
+                <div className="flex flex-col w-full gap-3 lg:w-1/3">
                     <Card className="bg-background">
                         <CardHeader>
                             <CardTitle>By Popularity</CardTitle>
@@ -206,8 +204,7 @@ const Taste: FC = () => {
                                 <Progress value={isPending ? 0 : TopSongs.filter((songs: TopSongs) => songs.popularity >= 80).length * 2} className="h-2" />
                             </div>
                         </CardContent>
-                    </Card>
-                    <Card className="bg-background">
+                        <Separator className="dark" orientation="horizontal" />
                         <CardHeader className="flex flex-col">
                             <CardTitle className="text-xl">Most Popular</CardTitle>
                             {isPending ?
@@ -236,8 +233,7 @@ const Taste: FC = () => {
                                 </div>
                             }
                         </CardHeader>
-                    </Card>
-                    <Card className="bg-background">
+                        <Separator className="dark" orientation="horizontal" />
                         <CardHeader className="flex flex-col">
                             <CardTitle className="text-xl">Most Obscure</CardTitle>
                             {isPending ?
@@ -268,7 +264,7 @@ const Taste: FC = () => {
                         </CardHeader>
                     </Card>
                 </div>
-                <div className="flex flex-col w-1/3 gap-3">
+                <div className="flex flex-col w-full gap-3 lg:w-1/3">
                     <Card className="bg-background">
                         <CardHeader>
                             <CardTitle>By Length</CardTitle>
@@ -283,8 +279,7 @@ const Taste: FC = () => {
                                 <Progress value={isPending ? 0 : countItemsByDuration(TopSongs, 4).greaterThanOrEqualThreshold * 2} className="h-2" />
                             </div>
                         </CardContent>
-                    </Card>
-                    <Card className="bg-background">
+                        <Separator className="dark" orientation="horizontal" />
                         <CardHeader className="flex flex-col">
                             <CardTitle className="flex items-center gap-3 text-xl">Longest
                                 <span className="px-2 text-sm rounded-lg bg-neutral-800">{isPending ? "" : formatDuration(TopSongs?.reduce((acc, curr) => (curr.duration > acc.duration) ? curr : acc)?.duration)}</span>
@@ -315,8 +310,7 @@ const Taste: FC = () => {
                                 </div>
                             }
                         </CardHeader>
-                    </Card>
-                    <Card className="bg-background">
+                        <Separator className="dark" orientation="horizontal" />
                         <CardHeader className="flex flex-col">
                             <CardTitle className="flex items-center gap-3 text-xl">Shortest
                                 <span className="px-2 text-sm rounded-lg bg-neutral-800">{isPending ? "" : formatDuration(TopSongs?.reduce((acc, curr) => (curr.duration < acc.duration) ? curr : acc)?.duration)}</span>

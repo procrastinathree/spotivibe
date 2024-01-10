@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import SpinnerLoader from "@/components/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -95,13 +96,13 @@ const SongsPage: FC<SongsPageProps> = () => {
 
     return (
         <div className="flex flex-col gap-8">
-            <div className="flex flex-col lg:flex-row gap-8">
-                <Card className="flex flex-col w-full lg:w-2/3 gap-6">
-                    <CardHeader className="flex flex-col sm:flex-row items-center justify-between">
-                        <CardTitle className="font-bold mb-4">Top Songs</CardTitle>
-                        <div className="flex flex-col sm:flex-row gap-4"> {/* Step 1 */}
+            <div className="flex flex-col gap-8 lg:flex-row">
+                <Card className="flex flex-col w-full gap-6">
+                    <CardHeader className="flex flex-col items-center justify-between md:flex-row">
+                        <CardTitle className="mb-4 font-bold">Top Songs</CardTitle>
+                        <div className="flex w-full gap-4 md:w-fit"> {/* Step 1 */}
                             <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange}>
-                                <SelectTrigger className="w-full sm:w-[180px]"> {/* Step 2 */}
+                                <SelectTrigger className="w-full md:w-fit"> {/* Step 2 */}
                                     <SelectValue placeholder={timeRange.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -111,7 +112,7 @@ const SongsPage: FC<SongsPageProps> = () => {
                                 </SelectContent>
                             </Select>
                             <Select onValueChange={handleSortByChange} defaultValue={sortBy}>
-                                <SelectTrigger className="w-full sm:w-[180px]"> {/* Step 2 */}
+                                <SelectTrigger className="w-full md:w-fit"> {/* Step 2 */}
                                     <SelectValue placeholder={sortBy.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -126,19 +127,32 @@ const SongsPage: FC<SongsPageProps> = () => {
                             </Select>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex flex-col lg:flex-row gap-6">
-                        <div className="flex flex-row w-full lg:w-1/2 gap-2">
-                            {isPending ?
-                                <div className="flex items-center justify-center w-full">
-                                    <SpinnerLoader />
-                                </div> :
-                                TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
+                    <CardContent className="flex flex-col gap-6 lg:flex-row">
+                        {isPending ?
+                            <div className="flex flex-row w-full gap-6 lg:w-1/3">
+                                <Skeleton className="relative w-full h-56">
+                                    <span
+                                        className={"absolute text-5xl font-bold -translate-x-1/2 text-[#FFD700]/50 -translate-y-1/2 top-1/2 left-1/2"}
+                                    >1</span>
+                                </Skeleton>
+                                <Skeleton className="relative w-full h-56">
+                                    <span
+                                        className={"absolute text-5xl font-bold -translate-x-1/2 text-[#C0C0C0]/50 -translate-y-1/2 top-1/2 left-1/2"}
+                                    >2</span>
+                                </Skeleton>
+                                <Skeleton className="relative w-full h-56">
+                                    <span
+                                        className={"absolute text-5xl font-bold -translate-x-1/2 text-[#CD7F32]/50 -translate-y-1/2 top-1/2 left-1/2"}
+                                    >3</span>
+                                </Skeleton>
+                            </div> :
+                            <div className="flex flex-row w-full gap-6 lg:w-1/3">
+                                {TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
                                     <a
                                         href={item.url}
                                         target="_blank"
-                                        className="relative w-full duration-200 ease-out drop-shadow-lg hover:scale-[1.02]"
-                                        key={item.name}
-                                    >
+                                        className="relative w-full h-56 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]"
+                                        key={item.name}>
                                         <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
                                         <span
                                             className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
@@ -151,86 +165,75 @@ const SongsPage: FC<SongsPageProps> = () => {
                                         </span>
                                     </a>
                                 ))}
-                        </div>
-                        <Card className="w-full lg:w-1/4 bg-background">
-                            <CardHeader>
-                                <CardTitle className="font-bold">By Popularity</CardTitle>
-                            </CardHeader>
-                            {isPending ? (
-                                <CardContent className="flex items-center justify-center">
-                                    <SpinnerLoader />
-                                </CardContent>
-                            ) : (
+                            </div>
+                        }
+                        <Card className="flex flex-col w-full overflow-hidden rounded-lg lg:w-2/3 md:flex-row bg-background">
+                            <div className="w-full bg-background ">
+                                <CardHeader>
+                                    <CardTitle className="font-bold">By Popularity</CardTitle>
+                                </CardHeader>
                                 <CardContent className="flex flex-col gap-2">
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-24 text-base overflow-hidden overflow-ellipsis">Obscure</CardTitle> {/* Step 3 */}
-                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity <= 50).length * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-24 overflow-ellipsis">Obscure</CardTitle> {/* Step 3 */}
+                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: TopSongs) => songs.popularity <= 50).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-24 text-base overflow-hidden overflow-ellipsis">Average</CardTitle> {/* Step 3 */}
-                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity < 80 && songs.popularity > 50).length * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-24 overflow-ellipsis">Average</CardTitle> {/* Step 3 */}
+                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: TopSongs) => songs.popularity < 80 && songs.popularity > 50).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-24 text-base overflow-hidden overflow-ellipsis">Highly Popular</CardTitle> {/* Step 3 */}
-                                        <Progress value={TopSongs.filter((songs: TopSongs) => songs.popularity >= 80).length * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-24 overflow-ellipsis">Popular</CardTitle> {/* Step 3 */}
+                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: TopSongs) => songs.popularity >= 80).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                 </CardContent>
-                            )}
-                        </Card>
-                        <Card className="w-full lg:w-1/4 bg-background">
-                            <CardHeader>
-                                <CardTitle className="font-bold">By Decade</CardTitle>
-                            </CardHeader>
-                            {isPending ? (
-                                <CardContent className="flex items-center justify-center">
-                                    <SpinnerLoader />
-                                </CardContent>
-                            ) : (
+                            </div>
+                            <Separator orientation="vertical" />
+                            <div className="w-full bg-background ">
+                                <CardHeader>
+                                    <CardTitle className="font-bold">By Decade</CardTitle>
+                                </CardHeader>
                                 <CardContent className="flex flex-col gap-2">
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-20 text-base overflow-hidden overflow-ellipsis">2020s</CardTitle> {/* Step 3 */}
-                                        <Progress value={countByDecade(2020, TopSongs) * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-20 overflow-ellipsis">2020s</CardTitle> {/* Step 3 */}
+                                        <Progress value={isPending ? 0 : countByDecade(2020, TopSongs) * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-20 text-base overflow-hidden overflow-ellipsis">2010s</CardTitle> {/* Step 3 */}
-                                        <Progress value={countByDecade(2010, TopSongs) * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-20 overflow-ellipsis">2010s</CardTitle> {/* Step 3 */}
+                                        <Progress value={isPending ? 0 : countByDecade(2010, TopSongs) * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-20 text-base overflow-hidden overflow-ellipsis">2000s</CardTitle> {/* Step 3 */}
-                                        <Progress value={countByDecade(2000, TopSongs) * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 2 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-20 overflow-ellipsis">2000s</CardTitle> {/* Step 3 */}
+                                        <Progress value={isPending ? 0 : countByDecade(2000, TopSongs) * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                 </CardContent>
-                            )}
-                        </Card>
-                        <Card className="w-full lg:w-1/4 bg-background">
-                            <CardHeader>
-                                <CardTitle className="font-bold">By Length</CardTitle>
-                            </CardHeader>
-                            {isPending ? (
-                                <CardContent className="flex items-center justify-center">
-                                    <SpinnerLoader />
-                                </CardContent>
-                            ) : (
+                            </div>
+                            <Separator orientation="vertical" />
+                            <div className="w-full bg-background ">
+                                <CardHeader>
+                                    <CardTitle className="font-bold">By Length</CardTitle>
+                                </CardHeader>
                                 <CardContent className="flex flex-col gap-2">
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-16 text-base text-end overflow-hidden overflow-ellipsis">-4min</CardTitle> {/* Step 2 */}
-                                        <Progress value={countItemsByDuration(TopSongs, 4).lessThanOrEqualThreshold * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 1 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-16 text-start overflow-ellipsis">-4min</CardTitle> {/* Step 2 */}
+                                        <Progress value={isPending ? 0 : countItemsByDuration(TopSongs, 4).lessThanOrEqualThreshold * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 1 */}
                                     </div>
                                     <div className="flex items-center gap-4">
-                                        <CardTitle className="w-1/2 lg:w-16 text-base text-end overflow-hidden overflow-ellipsis">4m+</CardTitle> {/* Step 2 */}
-                                        <Progress value={countItemsByDuration(TopSongs, 4).greaterThanOrEqualThreshold * 2} className="h-2 w-full lg:w-2/3" /> {/* Step 1 */}
+                                        <CardTitle className="w-1/2 overflow-hidden text-base lg:w-16 text-start overflow-ellipsis">4m+</CardTitle> {/* Step 2 */}
+                                        <Progress value={isPending ? 0 : countItemsByDuration(TopSongs, 4).greaterThanOrEqualThreshold * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 1 */}
                                     </div>
                                 </CardContent>
-                            )}
+                            </div>
                         </Card>
                     </CardContent>
-                    <CardContent className="flex flex-col gap-4">
-                        {isPending ?
-                            <div className="flex items-center justify-center w-full">
-                                <SpinnerLoader />
-                            </div>
-                            :
-                            TopSongs.map((item: TopSongs, index: number) => (
+                    {isPending ?
+                        <CardContent className="flex flex-col gap-4">
+                            <Skeleton className="h-16" />
+                            <Skeleton className="h-16" />
+                            <Skeleton className="h-16" />
+                        </CardContent>
+                        :
+                        <CardContent className="flex flex-col gap-4">
+                            {TopSongs.map((item: TopSongs, index: number) => (
                                 <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
                                     'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
                                     'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
@@ -243,19 +246,18 @@ const SongsPage: FC<SongsPageProps> = () => {
                                     </Avatar>
                                     <div className="flex items-center justify-between w-full">
                                         <div className="flex flex-col gap-2">
-                                            <span className="font-bold text-neutral-100 overflow-hidden overflow-ellipsis max-w-[200px]">{item.name}</span>
+                                            <span className="overflow-hidden font-bold text-neutral-100 overflow-ellipsis">{item.name}</span>
                                             <div className="flex gap-2">{
                                                 item.artists.map((artist: any, index: number, array) => (
                                                     <div className="flex gap-2" key={index}>
                                                         <a
                                                             href={artist.url}
                                                             target="_blank"
-                                                            className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary overflow-hidden overflow-ellipsis overflow-x-hidden max-w-[100px]"
-                                                            key={artist.name}
-                                                            style={{ whiteSpace: 'pre-wrap', maxWidth: '100px' }}
-                                                        >
+                                                            className="z-10 overflow-hidden overflow-x-hidden font-bold rounded-lg text-neutral-500 hover:text-primary overflow-ellipsis"
+                                                            key={artist.name}>
                                                             {artist.name}
-                                                        </a>                                                        {index !== array.length - 1 ?
+                                                        </a>
+                                                        {index !== array.length - 1 ?
                                                             <Separator orientation="vertical" className="dark" /> :
                                                             ""
                                                         }
@@ -272,7 +274,8 @@ const SongsPage: FC<SongsPageProps> = () => {
                                     <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
                                 </div>
                             ))}
-                    </CardContent>
+                        </CardContent>
+                    }
                 </Card>
             </div>
         </div>

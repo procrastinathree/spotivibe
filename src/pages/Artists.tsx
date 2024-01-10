@@ -60,13 +60,13 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
     }
     return (
         <div className="flex flex-col gap-4 md:gap-8">
-            <div className="flex flex-col md:flex-row gap-4">
-                <Card className="flex flex-col w-full gap-4">
-                    <CardHeader className="flex flex-col md:flex-row items-center justify-between gap-4">
-                        <CardTitle className="font-bold">Top Artists</CardTitle>
-                        <div className="flex flex-col md:flex-row gap-4">
+            <div className="flex flex-col gap-4 md:flex-row">
+                <Card className="flex flex-col w-full gap-6">
+                    <CardHeader className="flex flex-col items-center justify-between gap-4 md:flex-row">
+                        <CardTitle className="mb-4 font-bold">Top Artists</CardTitle>
+                        <div className="flex w-full gap-4 md:w-fit">
                             <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange}>
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger className="w-full md:w-fit">
                                     <SelectValue placeholder={timeRange.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -76,7 +76,7 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                                 </SelectContent>
                             </Select>
                             <Select onValueChange={handleSortByChange} defaultValue={sortBy}>
-                                <SelectTrigger className="w-[180px]">
+                                <SelectTrigger className="w-full md:w-fit">
                                     <SelectValue placeholder={sortBy.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
                                 </SelectTrigger>
                                 <SelectContent>
@@ -87,17 +87,29 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                             </Select>
                         </div>
                     </CardHeader>
-                    <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+                    <CardContent className="flex flex-col gap-6 lg:flex-row">
                         {isPending ?
-                            <div className="flex flex-row w-1/4 gap-2">
-                                <Skeleton className="w-40 h-52 drop-shadow-lg" />
-                                <Skeleton className="w-40 h-52 drop-shadow-lg" />
-                                <Skeleton className="w-40 h-52 drop-shadow-lg" />
+                            <div className="flex flex-row w-full gap-6 lg:w-1/3">
+                                <Skeleton className="relative w-full h-56">
+                                    <span
+                                        className={"absolute text-5xl font-bold -translate-x-1/2 text-[#FFD700]/50 -translate-y-1/2 top-1/2 left-1/2"}
+                                    >1</span>
+                                </Skeleton>
+                                <Skeleton className="relative w-full h-56">
+                                    <span
+                                        className={"absolute text-5xl font-bold -translate-x-1/2 text-[#C0C0C0]/50 -translate-y-1/2 top-1/2 left-1/2"}
+                                    >2</span>
+                                </Skeleton>
+                                <Skeleton className="relative w-full h-56">
+                                    <span
+                                        className={"absolute text-5xl font-bold -translate-x-1/2 text-[#CD7F32]/50 -translate-y-1/2 top-1/2 left-1/2"}
+                                    >3</span>
+                                </Skeleton>
                             </div>
                             :
-                            <div className="flex flex-row w-1/4 gap-2">
+                            <div className="flex flex-row w-full gap-6 lg:w-1/3">
                                 {TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
-                                    <a href={item.url} target="_blank" className='relative w-40 h-52 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
+                                    <a href={item.url} target="_blank" className='relative w-full h-56 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
                                         <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
                                         <span className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
                                             "text-[#FFD700]/50": index === 0,
@@ -108,7 +120,7 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                                 ))}
                             </div>
                         }
-                        <Card className="w-1/4 bg-background">
+                        <Card className="w-full md:w-full lg:w-2/3 bg-background">
                             <CardHeader>
                                 <CardTitle>By Popularity</CardTitle>
                             </CardHeader>
@@ -122,7 +134,7 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                                     <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity < 80 && artist.popularity > 50).length * 2} className="h-2" />
                                 </div>
                                 <div className="flex items-center gap-4">
-                                    <CardTitle className="w-24 text-base">Obscure</CardTitle>
+                                    <CardTitle className="w-24 text-base">Popular</CardTitle>
                                     <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity >= 80).length * 2} className="h-2" />
                                 </div>
                             </CardContent>

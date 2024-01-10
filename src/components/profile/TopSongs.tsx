@@ -54,7 +54,7 @@ const TopSongsList: FC = () => {
     }
 
     return (
-        <Card className="w-1/2 h-fit">
+        <Card className="w-full xl:w-1/2 h-fit">
             <CardHeader className="flex flex-row items-center justify-between">
                 <CardTitle className="font-bold">Top Songs</CardTitle>
                 <Select onValueChange={handleTimeRangeChange}>

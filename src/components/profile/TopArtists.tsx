@@ -45,8 +45,8 @@ const TopArtistsList: FC = () => {
     }
 
     return (
-        <Card className="w-full mx-auto h-fit">
-            <CardHeader className="flex flex-col sm:flex-row items-center justify-between gap-4">
+        <Card className="w-full xl:w-1/2 h-fit">
+            <CardHeader className="flex flex-col items-center justify-between gap-4 sm:flex-row">
                 <CardTitle className="font-bold">Top Artists</CardTitle>
                 <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange}>
                     <SelectTrigger className="w-[180px]">
@@ -60,12 +60,12 @@ const TopArtistsList: FC = () => {
                 </Select>
             </CardHeader>
             {isPending ?
-                <CardContent className="flex flex-row gap-2 justify-center">
+                <CardContent className="flex flex-row gap-2">
                     <Skeleton className="z-20 w-40 h-40 drop-shadow-lg" />
                     <Skeleton className="z-10 w-40 h-40 scale-90 -translate-x-24 drop-shadow-lg" />
                     <Skeleton className="w-40 h-40 scale-75 -translate-x-52 drop-shadow-lg" />
                 </CardContent> :
-                <CardContent className="flex flex-row gap-2 justify-center">
+                <CardContent className="flex flex-row gap-2">
                     {TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
                         <a href={item.url} target="_blank" className={cx('w-40 drop-shadow-lg', {
                             'z-20 hover:scale-[1.02] ease-out duration-300': index === 0,

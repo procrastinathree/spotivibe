@@ -7,7 +7,7 @@ import { FC } from 'react';
 const ProfilePage: FC = () => {
   return (
     <div className="flex flex-col gap-16">
-      <div className='flex gap-16'>
+      <div className='flex flex-col gap-16 xl:flex-row'>
         <TopSongsList />
         <TopArtistsList />
       </div>

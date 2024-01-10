@@ -18,12 +18,12 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
     const token = Cookies.get("spotifyAuthToken")
     const location = useLocation()
     const { toast } = useToast()
-    const { data: CurrentUser, error: CurrentUserError } = useQuery({
+    const { data: CurrentUser, error: CurrentUserError, isPending: currentUserPending } = useQuery({
         queryKey: ['CurrentUser'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
     })
 
-    const { data: CurrentTrack, error: CurrentTrackError } = useQuery({
+    const { data: CurrentTrack, error: CurrentTrackError, isPending: currentTrackPending } = useQuery({
         queryKey: ['CurrrentTrack'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me/player/currently-playing", { headers: { Authorization: `Bearer ${token}` } })
     })
@@ -47,15 +47,15 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
     }
 
     return (
-        <div className="flex flex-col lg:flex-row lg:justify-between mt-8">
-            <div className="flex flex-col gap-8 lg:w-2/3">
-                <div className="flex flex-col lg:flex-row items-center md:items-start gap-8 h-auto lg:h-52">
+        <div className="flex flex-col mt-8 ">
+            <div className="flex flex-col gap-8">
+                <div className="flex flex-col items-center h-auto gap-8 md:flex-row md:items-start lg:h-52">
                     <img
                         src={CurrentUser?.data.images[1].url}
                         alt="profile photo"
-                        className="w-40 h-40 lg:w-52 lg:h-52 border-4 rounded-full border-neutral-100 bg-neutral-950 text-neutral-500"
+                        className="w-40 h-40 border-4 rounded-full lg:w-52 lg:h-52 border-neutral-100 bg-neutral-950 text-neutral-500"
                     />
-                    <div className="flex flex-col items-center md:items-start gap-2 flex-grow">
+                    <div className="flex flex-col items-center flex-grow gap-2 md:items-start">
                         <h1 className="text-4xl font-bold text-primary-foreground">{CurrentUser?.data.display_name ?? ""}</h1>
                         <a target="_blank" href={CurrentUser?.data.external_urls.spotify} className="flex items-center gap-2 font-semibold hover:text-primary text-primary-foreground">
                             <SpotifyIcon size={16} />
@@ -89,7 +89,7 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                         }
                     </div>
                 </div>
-                <div className="flex flex-col lg:flex-row mb-8 md:mb-0">
+                <div className="flex flex-row md:mb-0">
                     <NavLink className={cx("px-4 py-2 rounded-t-lg text-center text-primary font-bold", {
                         'bg-neutral-950 ease-out duration-300': location.pathname === "/profile"
                     })} to="/profile">Overview</NavLink>
