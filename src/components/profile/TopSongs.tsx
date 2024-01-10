@@ -10,6 +10,7 @@ import { cx } from "class-variance-authority";
 import Cookies from "js-cookie";
 import { Separator } from "../ui/separator";
 import SpinnerLoader from "../ui/spinner";
+import { Skeleton } from "../ui/skeleton";
 export type TopSongs = {
     name: string;
     image: string
@@ -67,13 +68,14 @@ const TopSongsList: FC = () => {
                     </SelectContent>
                 </Select>
             </CardHeader>
-            <CardContent className="flex flex-row gap-2">
-                {isPending ?
-                    <div className="flex items-center justify-center w-full">
-                        <SpinnerLoader />
-                    </div>
-                    :
-                    TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
+            {isPending ?
+                <CardContent className="flex flex-row gap-2">
+                    <Skeleton className="z-20 w-40 h-40 rounded-full drop-shadow-lg" />
+                    <Skeleton className="z-10 w-40 h-40 scale-90 -translate-x-24 rounded-full drop-shadow-lg" />
+                    <Skeleton className="w-40 h-40 scale-75 rounded-full -translate-x-52 drop-shadow-lg" />
+                </CardContent> :
+                <CardContent className="flex flex-row gap-2">
+                    {TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
                         <a href={item.url} target="_blank" className={cx('w-40 drop-shadow-lg', {
                             'z-20 hover:scale-[1.02] ease-out duration-300': index === 0,
                             '-translate-x-24 scale-90 z-10 hover:-translate-x-20 ease-out duration-300': index === 1,
@@ -81,16 +83,25 @@ const TopSongsList: FC = () => {
                         })} key={item.name}>
                             <img src={item.image} className="w-full rounded-full" alt={item.name} />
                         </a>
-                    ))
-                }
-            </CardContent>
-            <CardContent className="flex flex-col gap-3">
-                {isPending ?
-                    <div className="flex items-center justify-center w-full">
-                        <SpinnerLoader />
-                    </div>
-                    :
-                    TopSongs.map((item: TopSongs, index: number) => (
+                    ))}
+                </CardContent>
+            }
+            {isPending ?
+                <CardContent className="flex flex-col gap-3">
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                    <Skeleton className="h-16 rounded-lg" />
+                </CardContent>
+                :
+                <CardContent className="flex flex-col gap-3">
+                    {TopSongs.map((item: TopSongs, index: number) => (
                         <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
                             'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
                             'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
@@ -117,9 +128,9 @@ const TopSongsList: FC = () => {
                             </div>
                             <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
                         </div>
-                    ))
-                }
-            </CardContent>
+                    ))}
+                </CardContent>
+            }
             <CardFooter className="flex flex-row justify-center">
                 <NavLink to={"/profile/songs"} className={buttonVariants({ variant: "ghost", size: "lg", className: "text-lg w-full text-primary hover:text-primary" })}>SEE ALL</NavLink>
             </CardFooter>
