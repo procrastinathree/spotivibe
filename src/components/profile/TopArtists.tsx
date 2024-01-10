@@ -35,7 +35,7 @@ const TopArtistsList: FC = () => {
         },
     })
 
-    let TopArtist: TopArtist[] = data?.data.items
+    let TopArtist: TopArtist[] = isPending ? [] : data?.data.items
         .map((item: any) => ({
             name: item.name,
             image: item.images[2].url,
