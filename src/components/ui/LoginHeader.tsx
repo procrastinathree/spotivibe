@@ -22,30 +22,17 @@ const loginUrl = `${AUTH_ENDPOINT}?client_id=${CLIENT_ID}&redirect_uri=${encodeU
 
 const LoginHeader: FC<LoginHeaderProps> = () => {
     return (
-        <div className="flex flex-col w-full gap-16 px-32 py-16 col">
-            <div className="flex flex-col items-center gap-2">
-                <h1 className="flex items-center gap-2 text-5xl font-bold">
-                    <span className="text-primary-foreground">Welcome to</span>
+        <div className="flex flex-col w-full gap-8 px-4 md:px-32 py-16">
+            <div className="flex flex-col items-center gap-2 text-center">
+                <h1 className="text-2xl md:text-5xl font-bold mb-2">
+                    <span className="text-primary-foreground mx-2">Welcome to</span>
                     <span className="px-4 py-2 rounded-lg bg-secondary text-neutral-900">Spotivibe</span>
                 </h1>
-                <h5 className="mx-auto text-xl font-bold text-center text-neutral-300">Spotivibe is a web application that enhances your Spotify experience by creating playlists, tracking your Spotify activity, and more.</h5>
+                <h5 className="text-base md:text-xl font-bold text-neutral-300">Enhances your Spotify experience by creating playlists, tracking your Spotify activity, and more.</h5>
             </div>
             <div className="flex flex-col items-center justify-between w-full gap-8">
-                <div className="w-1/3">
-                    <Carousel className="w-fit">
-                        <CarouselContent className="w-fit">
-                            <CarouselItem className="text-sm font-semibold text-center w-fit text-neutral-300">Create custom playlists based on your music preferences and favorite tracks</CarouselItem>
-                            <CarouselItem className="text-sm font-semibold text-center w-fit text-neutral-300">Keep track of your listening habits and get insights into your music choices</CarouselItem>
-                            <CarouselItem className="text-sm font-semibold text-center w-fit text-neutral-300">Access Spotify's vast music library and user data, fun of yourself</CarouselItem>
-                            <CarouselItem className="text-sm font-semibold text-center w-fit text-neutral-300">View and manage your Spotivibe user profile and share with others</CarouselItem>
-                        </CarouselContent>
-                        <CarouselPrevious />
-                        <CarouselNext />
-                    </Carousel>
-                </div>
-
-                <div className="flex flex-col items-center gap-2 mt-42">
-                    <a href={loginUrl} type="button" className={buttonVariants({ className: "!text-2xl py-8 flex gap-4", size: "sm" })}>
+                <div className="flex flex-col items-center gap-2">
+                    <a href={loginUrl} className={buttonVariants({ className: "text-xl md:text-2xl py-6 md:py-8 flex gap-4", size: "sm" })}>
                         <SpotifyIcon size={32} />
                         <p className="text-base font-bold">Sign in with Spotify</p>
                     </a>

@@ -10,10 +10,10 @@ interface FooterProps {
 
 const Footer: FC<FooterProps> = () => {
     return (
-        <footer className="container flex flex-col gap-8 mb-8 dark">
+        <footer className="container mx-auto flex flex-col gap-8 mb-8 p-4 dark">
             <Separator />
-            <div className="flex gap-8">
-                <div className="flex flex-col w-2/5 gap-6">
+            <div className="flex flex-col md:flex-row gap-8">
+                <div className="flex flex-col w-full md:w-2/5 gap-6">
                     <div className="flex flex-col gap-4">
                         <CardTitle className="text-lg">Spotivibe</CardTitle>
                         <p className="text-sm font-semibold text-neutral-100">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Possimus eius quis ad recusandae rem adipisci modi. Similique voluptatibus porro eos.</p>
@@ -22,7 +22,7 @@ const Footer: FC<FooterProps> = () => {
                         Music data, artist images, album covers, and song previews are provided by Spotify. Spotify is a trademark of Spotify AB.
                     </CardDescription>
                 </div>
-                <div className="flex flex-col w-1/5 gap-4">
+                <div className="w-1/2 md:w-1/4">
                     <CardDescription className="text-base font-semibold">Global</CardDescription>
                     <div className="flex flex-col gap-2">
                         <NavLink to={"/most-followed-artists"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Most Followed Artist</NavLink>
@@ -31,7 +31,7 @@ const Footer: FC<FooterProps> = () => {
                         <NavLink to={"/most-popular-albums"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Most Popular Albums</NavLink>
                     </div>
                 </div>
-                <div className="flex flex-col w-1/5 gap-4">
+                <div className="w-1/2 md:w-1/4">
                     <CardDescription className="text-base font-semibold">More</CardDescription>
                     <div className="flex flex-col gap-2">
                         <NavLink to={"/blog"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Blog</NavLink>
@@ -41,7 +41,7 @@ const Footer: FC<FooterProps> = () => {
                         <NavLink to={"/contact"} className="font-semibold text-neutral-100 hover:text-primary w-fit">Contact</NavLink>
                     </div>
                 </div>
-                <div className="flex flex-col w-1/5 gap-4">
+                <div className="w-1/2 md:w-1/4">
                     <CardDescription className="text-base font-semibold">Connect</CardDescription>
                     <div className="flex flex-col gap-2">
                         <NavLink to={"/most-followed-artists"} className="flex items-center gap-2 font-semibold w-fit text-neutral-100 hover:text-primary">
@@ -56,30 +56,10 @@ const Footer: FC<FooterProps> = () => {
                 </div>
             </div>
             <Separator />
-            <div className="flex justify-end gap-6">
-                <div className="flex gap-2">
-                    <CardTitle className="text-base font-bold">5.6M</CardTitle>
-                    <CardDescription className="text-base font-semibold">Artist</CardDescription>
-                </div>
-                <div className="flex gap-2">
-                    <CardTitle className="text-base font-bold">5.6M</CardTitle>
-                    <CardDescription className="text-base font-semibold">Songs</CardDescription>
-                </div>
-                <div className="flex gap-2">
-                    <CardTitle className="text-base font-bold">5.6M</CardTitle>
-                    <CardDescription className="text-base font-semibold">Albums</CardDescription>
-                </div>
-                <div className="flex gap-2">
-                    <CardTitle className="text-base font-bold">5.6M</CardTitle>
-                    <CardDescription className="text-base font-semibold">Genres</CardDescription>
-                </div>
-                <div className="flex gap-2">
-                    <CardTitle className="text-base font-bold">5.6M</CardTitle>
-                    <CardDescription className="text-base font-semibold">Labels</CardDescription>
-                </div>
-                <div className="flex gap-2">
-                    <CardTitle className="text-base font-bold">5.6M</CardTitle>
-                    <CardDescription className="text-base font-semibold">Playlists</CardDescription>
+            <div className="flex flex-wrap justify-center gap-6">
+                <div className="text-center">
+                    <CardTitle className="text-base font-bold">Spotivibe is developed by</CardTitle>
+                    <CardDescription className="text-base font-semibold hover:underline"><a href="https://github.com/procrastinathree" target="_blank">Procrastinathree</a></CardDescription>
                 </div>
             </div>
         </footer>
