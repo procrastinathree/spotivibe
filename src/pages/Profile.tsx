@@ -8,8 +8,8 @@ const ProfilePage: FC = () => {
   return (
     <div className="flex flex-col gap-16">
       <div className='flex gap-16'>
-        <TopArtistsList />
         <TopSongsList />
+        <TopArtistsList />
       </div>
       <Taste />
     </div>
