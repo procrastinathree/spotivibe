@@ -9,7 +9,6 @@ import axios from "axios";
 import { cx } from "class-variance-authority";
 import Cookies from "js-cookie";
 import { Separator } from "../ui/separator";
-import SpinnerLoader from "../ui/spinner";
 import { Skeleton } from "../ui/skeleton";
 export type TopSongs = {
     name: string;

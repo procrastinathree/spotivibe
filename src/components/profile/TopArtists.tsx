@@ -8,7 +8,6 @@ import { NavLink } from "react-router-dom";
 import { buttonVariants } from "../ui/button";
 import { cx } from "class-variance-authority";
 import Cookies from "js-cookie";
-import SpinnerLoader from "../ui/spinner";
 import { Skeleton } from "../ui/skeleton";
 export type TopArtist = {
     name: string;
@@ -46,10 +45,10 @@ const TopArtistsList: FC = () => {
     }
 
     return (
-        <Card className="w-1/2 h-fit">
-            <CardHeader className="flex flex-row items-center justify-between">
+        <Card className="w-full mx-auto h-fit">
+            <CardHeader className="flex flex-col sm:flex-row items-center justify-between gap-4">
                 <CardTitle className="font-bold">Top Artists</CardTitle>
-                <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange} >
+                <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange}>
                     <SelectTrigger className="w-[180px]">
                         <SelectValue placeholder={timeRange.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
                     </SelectTrigger>
@@ -61,12 +60,12 @@ const TopArtistsList: FC = () => {
                 </Select>
             </CardHeader>
             {isPending ?
-                <CardContent className="flex flex-row gap-2">
+                <CardContent className="flex flex-row gap-2 justify-center">
                     <Skeleton className="z-20 w-40 h-40 drop-shadow-lg" />
                     <Skeleton className="z-10 w-40 h-40 scale-90 -translate-x-24 drop-shadow-lg" />
                     <Skeleton className="w-40 h-40 scale-75 -translate-x-52 drop-shadow-lg" />
                 </CardContent> :
-                <CardContent className="flex flex-row gap-2">
+                <CardContent className="flex flex-row gap-2 justify-center">
                     {TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
                         <a href={item.url} target="_blank" className={cx('w-40 drop-shadow-lg', {
                             'z-20 hover:scale-[1.02] ease-out duration-300': index === 0,
@@ -111,7 +110,7 @@ const TopArtistsList: FC = () => {
                 </CardContent>
             }
             <CardFooter className="flex flex-row justify-center">
-                <NavLink to={"/profile/artists"} className={buttonVariants({ variant: "ghost", size: "lg", className: "text-lg w-full text-primary hover:text-primary" })}>SEE ALL</NavLink>
+                <NavLink to={"/profile/artists"} className={buttonVariants({ variant: "ghost", size: "lg", className: "text-lg w-full md:w-auto text-primary hover:text-primary" })}>SEE ALL</NavLink>
             </CardFooter>
         </Card>
     );
