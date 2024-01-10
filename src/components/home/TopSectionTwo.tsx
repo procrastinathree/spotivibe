@@ -2,14 +2,12 @@ import { FC } from "react";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "../ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
 
-interface TopSectionTwoProps {
-
-}
+interface TopSectionTwoProps {}
 
 const TopSectionTwo: FC<TopSectionTwoProps> = () => {
     return (
-        <div className="flex gap-16">
-            <Card className="w-2/3 overflow-hidden">
+        <div className="flex flex-col md:flex-row gap-4 md:gap-16">
+            <Card className="w-full md:w-2/3 overflow-hidden">
                 <div className="flex gap-8">
                     <div className="flex flex-col">
                         <CardHeader>
@@ -35,8 +33,8 @@ const TopSectionTwo: FC<TopSectionTwoProps> = () => {
                     </div>
                 </div>
             </Card>
-            <Card className="w-1/3 overflow-hidden">
-                <CardHeader>
+            <Card className="w-full md:w-1/3 overflow-hidden">
+            <CardHeader>
                     <CardTitle>Popular Now</CardTitle>
                     <CardDescription className="text-lg font-bold">What the world is listening to</CardDescription>
                 </CardHeader>

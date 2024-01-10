@@ -97,8 +97,8 @@ const TopSectionOne: FC<TopSectionOneProps> = () => {
     }
 
     return (
-        <div className="flex gap-16">
-            <Card className="w-1/3 overflow-hidden">
+        <div className="flex flex-col lg:flex-row gap-8">
+            <Card className="w-full lg:w-1/3 overflow-hidden">
                 <CardHeader className="relative p-0">
                     <img
                         src={topArtist.image}
@@ -139,7 +139,7 @@ const TopSectionOne: FC<TopSectionOneProps> = () => {
                     </div>
                 </CardContent>
             </Card>
-            <Card className="w-2/3 overflow-hidden">
+            <Card className="w-full lg:w-2/3 overflow-hidden">
                 <CardHeader className="relative p-0">
                     <img src={topTrack.albumImage}
                         alt="artist image"
