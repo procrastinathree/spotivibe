@@ -98,7 +98,7 @@ const SongsPage: FC<SongsPageProps> = () => {
             <div className="flex flex-col lg:flex-row gap-8">
                 <Card className="flex flex-col w-full lg:w-2/3 gap-6">
                     <CardHeader className="flex flex-col sm:flex-row items-center justify-between">
-                        <CardTitle className="font-bold mb-4 md:mb-0">Top Songs</CardTitle>
+                        <CardTitle className="font-bold mb-4">Top Songs</CardTitle>
                         <div className="flex flex-col sm:flex-row gap-4"> {/* Step 1 */}
                             <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange}>
                                 <SelectTrigger className="w-full sm:w-[180px]"> {/* Step 2 */}

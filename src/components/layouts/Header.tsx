@@ -17,7 +17,7 @@ const Header: FC<HeaderProps> = () => {
     const isLogin: boolean = !!Cookies.get("spotifyAuthToken");
 
     const token = Cookies.get("spotifyAuthToken");
-    const { data: CurrentUser } = useQuery({
+    const { data: CurrentUser, isPending } = useQuery({
         queryKey: ['CurrentUser'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
     });
@@ -25,11 +25,11 @@ const Header: FC<HeaderProps> = () => {
     return (
         <header className="relative overflow-hidden bg-center bg-cover bg-neutral-900">
             <div className="container z-50 px-4 mt-4">
-                <CardHeader className="flex flex-col md:flex-row items-center justify-between">
+                <CardHeader className="flex flex-col items-center justify-between md:flex-row">
                     <CardTitle>
                         <NavLink
                             to="/"
-                            className="flex items-center text-primary mb-4 md:mb-0"
+                            className="flex items-center mb-4 text-primary md:mb-0"
                         >
                             <img src="/spotivibe.png" className="w-8 mx-1" alt="" />
                             <span>Spoti</span>
@@ -37,7 +37,7 @@ const Header: FC<HeaderProps> = () => {
                         </NavLink>
                     </CardTitle>
                     {isLogin ? (
-                        <div className="flex flex-col sm:flex-row items-center gap-2 mt-4 md:mt-0">
+                        <div className="flex flex-col items-center gap-2 mt-4 sm:flex-row md:mt-0">
                             <Input
                                 type="search"
                                 placeholder="Search..."
@@ -48,12 +48,6 @@ const Header: FC<HeaderProps> = () => {
                                 to="/profile"
                             >
                                 My Profile
-                            </NavLink>
-                            <NavLink
-                                className={location.pathname === "/settings" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
-                                to="/settings"
-                            >
-                                Settings
                             </NavLink>
                             <NavLink
                                 className={location.pathname === "/account" ? buttonVariants({ variant: "secondary", className: "dark" }) : buttonVariants({ variant: "ghost" })}
@@ -95,7 +89,7 @@ const Header: FC<HeaderProps> = () => {
                                 <CardContent>
                                     <p className="text-center md:text-start">
                                         <span className="font-semibold text-neutral-300">
-                                            Welcome back {CurrentUser?.data.display_name ?? "Guest"}
+                                            Welcome back {isPending ? "Guest" : CurrentUser?.data.display_name}
                                         </span>
                                         <NavLink
                                             className={buttonVariants({

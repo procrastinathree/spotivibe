@@ -26,12 +26,6 @@ const TopArtistsList: FC = () => {
         queryKey: ["TopArtists"],
         queryFn: async () => {
             const data = await axios.get(`https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}&limit=10`, { headers: { Authorization: `Bearer ${token}` } })
-            TopArtist = data?.data.items
-                .map((item: any) => ({
-                    name: item.name,
-                    image: item.images[2].url,
-                    url: item.external_urls.spotify
-                }))
             return data
         },
     })
@@ -40,6 +34,7 @@ const TopArtistsList: FC = () => {
         .map((item: any) => ({
             name: item.name,
             image: item.images[2].url,
+            image_hd: item.images[1].url,
             url: item.external_urls.spotify
         })) ?? []
 
@@ -78,7 +73,7 @@ const TopArtistsList: FC = () => {
                             '-translate-x-24 scale-90 z-10 hover:-translate-x-20 ease-out duration-300': index === 1,
                             '-translate-x-52 scale-75 hover:-translate-x-44 ease-out duration-300': index === 2,
                         })} key={item.name}>
-                            <img src={item.image} className="w-full rounded-lg" alt={item.name} />
+                            <img src={item.image_hd} className="w-full rounded-lg" alt={item.name} />
                         </a>
                     ))}
                 </CardContent>
