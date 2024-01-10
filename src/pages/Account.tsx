@@ -57,9 +57,11 @@ const AccountPage: FC<AccountPageProps> = () => {
 
     const handleLogout = () => {
         console.log('ProfilePage: Log Out...');
-        Cookies.remove('spotifyAuthToken');
+        localStorage.removeItem('spotifyAuthToken');
+        Cookies.remove('spotifyAuthToken')
         navigate('/');
     };
+
     return (
         <div className="flex flex-col gap-8">
             <Card className="overflow-hidden">
