@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import { Skeleton } from "@/components/ui/skeleton";
 import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useQuery } from "@tanstack/react-query";
@@ -33,7 +34,7 @@ const AccountPage: FC<AccountPageProps> = () => {
         }
     }, [navigate]);
 
-    const { data: CurrentUser, error: CurrentUserError } = useQuery({
+    const { data: CurrentUser, error: CurrentUserError, isLoading: CurrentUserLoading } = useQuery({
         queryKey: ['CurrentUser'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
     })
@@ -64,9 +65,11 @@ const AccountPage: FC<AccountPageProps> = () => {
         <div className="flex flex-col gap-8">
             <Card className="overflow-hidden">
                 <div className="flex">
-                    <div className="p-4 bg-primary">
+                    {CurrentUserLoading ?
+                        <Skeleton className="w-52" />
+                        :
                         <img src={CurrentUser?.data.images[1].url} className="rounded-lg w-52" alt="" />
-                    </div>
+                    }
                     <div className="flex flex-col">
                         <CardHeader>
                             <CardTitle>Spotify Account</CardTitle>
@@ -75,11 +78,19 @@ const AccountPage: FC<AccountPageProps> = () => {
                         <CardContent className="flex flex-col gap-4">
                             <div className="flex flex-col">
                                 <CardDescription>Username</CardDescription>
-                                <a href={CurrentUser?.data.external_urls.spotify} target="_blank" className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.id}</a>
+                                {CurrentUserLoading ?
+                                    <Skeleton className="w-64 h-6 mt-1" />
+                                    :
+                                    <a href={CurrentUser?.data.external_urls.spotify} target="_blank" className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.id}</a>
+                                }
                             </div>
                             <div className="flex flex-col gap-2">
                                 <CardDescription>Email</CardDescription>
-                                <span className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.email}</span>
+                                {CurrentUserLoading ?
+                                    <Skeleton className="h-6 w-52" />
+                                    :
+                                    <span className="text-base font-bold duration-200 ease-out text-neutral-100 hover:text-primary">{CurrentUser?.data.email}</span>
+                                }
                             </div>
                         </CardContent>
                     </div>
