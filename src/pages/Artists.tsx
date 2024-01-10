@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import { Skeleton } from "@/components/ui/skeleton";
 import SpinnerLoader from "@/components/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
@@ -89,14 +90,16 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                         </div>
                     </CardHeader>
                     <CardContent className="flex gap-6">
-                        <div className="flex flex-row w-1/4 gap-2">
-                            {isPending ?
-                                <div className="flex items-center justify-center w-full">
-                                    <SpinnerLoader />
-                                </div>
-                                :
-                                TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
-                                    <a href={item.url} target="_blank" className='relative w-40 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
+                        {isPending ?
+                            <div className="flex flex-row w-1/4 gap-2">
+                                <Skeleton className="w-40 h-52 drop-shadow-lg" />
+                                <Skeleton className="w-40 h-52 drop-shadow-lg" />
+                                <Skeleton className="w-40 h-52 drop-shadow-lg" />
+                            </div>
+                            :
+                            <div className="flex flex-row w-1/4 gap-2">
+                                {TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
+                                    <a href={item.url} target="_blank" className='relative w-40 h-52 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
                                         <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
                                         <span className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
                                             "text-[#FFD700]/50": index === 0,
@@ -105,38 +108,37 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                                         })}>{index + 1}</span>
                                     </a>
                                 ))}
-                        </div>
+                            </div>
+                        }
                         <Card className="w-1/4 bg-background">
                             <CardHeader>
                                 <CardTitle>By Popularity</CardTitle>
                             </CardHeader>
-                            {isPending ?
-                                <CardContent className="flex items-center justify-center"><SpinnerLoader /></CardContent>
-                                :
-                                <CardContent className="flex flex-col gap-2">
-                                    <div className="flex items-center gap-4">
-                                        <CardTitle className="w-24 text-base">Obscure</CardTitle>
-                                        <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity <= 50).length * 2} className="h-2" />
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <CardTitle className="w-24 text-base">Average</CardTitle>
-                                        <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity < 80 && artist.popularity > 50).length * 2} className="h-2" />
-                                    </div>
-                                    <div className="flex items-center gap-4">
-                                        <CardTitle className="w-24 text-base">Obscure</CardTitle>
-                                        <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity >= 80).length * 2} className="h-2" />
-                                    </div>
-                                </CardContent>
-                            }
+                            <CardContent className="flex flex-col gap-2">
+                                <div className="flex items-center gap-4">
+                                    <CardTitle className="w-24 text-base">Obscure</CardTitle>
+                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity <= 50).length * 2} className="h-2" />
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <CardTitle className="w-24 text-base">Average</CardTitle>
+                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity < 80 && artist.popularity > 50).length * 2} className="h-2" />
+                                </div>
+                                <div className="flex items-center gap-4">
+                                    <CardTitle className="w-24 text-base">Obscure</CardTitle>
+                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity >= 80).length * 2} className="h-2" />
+                                </div>
+                            </CardContent>
                         </Card>
                     </CardContent>
-                    <CardContent className="flex flex-col gap-4">
-                        {isPending ?
-                            <div className="flex items-center justify-center w-full">
-                                <SpinnerLoader />
-                            </div>
-                            :
-                            TopArtist.map((item: TopArtist, index: number) => (
+                    {isPending ?
+                        <CardContent className="flex flex-col gap-4">
+                            <Skeleton className="h-12" />
+                            <Skeleton className="h-12" />
+                            <Skeleton className="h-12" />
+                        </CardContent>
+                        :
+                        <CardContent className="flex flex-col gap-4">
+                            {TopArtist.map((item: TopArtist, index: number) => (
                                 <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
                                     'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
                                     'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
@@ -156,7 +158,8 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                                     </div>
                                 </div>
                             ))}
-                    </CardContent>
+                        </CardContent>
+                    }
                 </Card>
             </div>
         </div>
