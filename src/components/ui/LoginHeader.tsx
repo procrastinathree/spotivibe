@@ -1,7 +1,6 @@
 import { FC } from "react";
 import { buttonVariants } from "./button";
 import SpotifyIcon from "../icons/SpotifyIcon";
-import { Carousel, CarouselContent, CarouselItem, CarouselNext, CarouselPrevious } from "./carousel";
 
 
 interface LoginHeaderProps {

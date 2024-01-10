@@ -3,9 +3,7 @@ import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import SpinnerLoader from "@/components/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { cx } from "class-variance-authority";
@@ -61,12 +59,12 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
         }, 500);
     }
     return (
-        <div className="flex flex-col gap-8">
-            <div className="flex gap-8">
-                <Card className="flex flex-col w-full gap-6">
-                    <CardHeader className="flex flex-row items-center justify-between">
+        <div className="flex flex-col gap-4 md:gap-8">
+            <div className="flex flex-col md:flex-row gap-4">
+                <Card className="flex flex-col w-full gap-4">
+                    <CardHeader className="flex flex-col md:flex-row items-center justify-between gap-4">
                         <CardTitle className="font-bold">Top Artists</CardTitle>
-                        <div className="flex gap-4">
+                        <div className="flex flex-col md:flex-row gap-4">
                             <Select onValueChange={handleTimeRangeChange} defaultValue={timeRange}>
                                 <SelectTrigger className="w-[180px]">
                                     <SelectValue placeholder={timeRange.split('_').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ')} />
@@ -89,7 +87,7 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                             </Select>
                         </div>
                     </CardHeader>
-                    <CardContent className="flex gap-6">
+                    <CardContent className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
                         {isPending ?
                             <div className="flex flex-row w-1/4 gap-2">
                                 <Skeleton className="w-40 h-52 drop-shadow-lg" />

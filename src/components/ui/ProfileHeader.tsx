@@ -89,14 +89,14 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                         }
                     </div>
                 </div>
-                <div className="flex flex-col lg:flex-row">
-                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-primary font-bold", {
+                <div className="flex flex-col lg:flex-row mb-8 md:mb-0">
+                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-center text-primary font-bold", {
                         'bg-neutral-950 ease-out duration-300': location.pathname === "/profile"
                     })} to="/profile">Overview</NavLink>
-                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-primary font-bold", {
+                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-center text-primary font-bold", {
                         'bg-neutral-950 ease-out duration-300': location.pathname === "/profile/songs"
                     })} to="/profile/songs">Songs</NavLink>
-                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-primary font-bold", {
+                    <NavLink className={cx("px-4 py-2 rounded-t-lg text-center text-primary font-bold", {
                         'bg-neutral-950 ease-out duration-300': location.pathname === "/profile/artists"
                     })} to="/profile/artists">Artists</NavLink>
                 </div>
