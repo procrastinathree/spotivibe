@@ -4,6 +4,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
+import SpinnerLoader from "@/components/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { cx } from "class-variance-authority";
@@ -20,7 +21,7 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
     const [timeRange, setTimeRange] = useState<string>("long_term")
     const [sortBy, setSortBy] = useState<string>("spotify_rank")
 
-    const { data, refetch } = useQuery({
+    const { data, refetch, isPending } = useQuery({
         queryKey: ["TopArtists"],
         queryFn: async () => {
             const data = await axios.get(`https://api.spotify.com/v1/me/top/artists?time_range=${timeRange}&limit=100`, { headers: { Authorization: `Bearer ${token}` } })
@@ -89,58 +90,72 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                     </CardHeader>
                     <CardContent className="flex gap-6">
                         <div className="flex flex-row w-1/4 gap-2">
-                            {TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
-                                <a href={item.url} target="_blank" className='relative w-40 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
-                                    <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
-                                    <span className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
-                                        "text-[#FFD700]/50": index === 0,
-                                        "text-[#C0C0C0]/50": index === 1,
-                                        "text-[#CD7F32]/50": index === 2,
-                                    })}>{index + 1}</span>
-                                </a>
-                            ))}
+                            {isPending ?
+                                <div className="flex items-center justify-center w-full">
+                                    <SpinnerLoader />
+                                </div>
+                                :
+                                TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
+                                    <a href={item.url} target="_blank" className='relative w-40 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
+                                        <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
+                                        <span className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
+                                            "text-[#FFD700]/50": index === 0,
+                                            "text-[#C0C0C0]/50": index === 1,
+                                            "text-[#CD7F32]/50": index === 2,
+                                        })}>{index + 1}</span>
+                                    </a>
+                                ))}
                         </div>
                         <Card className="w-1/4 bg-background">
                             <CardHeader>
                                 <CardTitle>By Popularity</CardTitle>
                             </CardHeader>
-                            <CardContent className="flex flex-col gap-2">
-                                <div className="flex items-center gap-4">
-                                    <CardTitle className="w-24 text-base">Obscure</CardTitle>
-                                    <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity <= 50).length * 2} className="h-2" />
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <CardTitle className="w-24 text-base">Average</CardTitle>
-                                    <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity < 80 && artist.popularity > 50).length * 2} className="h-2" />
-                                </div>
-                                <div className="flex items-center gap-4">
-                                    <CardTitle className="w-24 text-base">Obscure</CardTitle>
-                                    <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity >= 80).length * 2} className="h-2" />
-                                </div>
-                            </CardContent>
+                            {isPending ?
+                                <CardContent className="flex items-center justify-center"><SpinnerLoader /></CardContent>
+                                :
+                                <CardContent className="flex flex-col gap-2">
+                                    <div className="flex items-center gap-4">
+                                        <CardTitle className="w-24 text-base">Obscure</CardTitle>
+                                        <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity <= 50).length * 2} className="h-2" />
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <CardTitle className="w-24 text-base">Average</CardTitle>
+                                        <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity < 80 && artist.popularity > 50).length * 2} className="h-2" />
+                                    </div>
+                                    <div className="flex items-center gap-4">
+                                        <CardTitle className="w-24 text-base">Obscure</CardTitle>
+                                        <Progress value={TopArtist.filter((artist: TopArtist) => artist.popularity >= 80).length * 2} className="h-2" />
+                                    </div>
+                                </CardContent>
+                            }
                         </Card>
                     </CardContent>
                     <CardContent className="flex flex-col gap-4">
-                        {TopArtist.map((item: TopArtist, index: number) => (
-                            <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
-                                'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
-                                'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
-                                'bg-gradient-to-r from-[#CD7F32]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#CD7F32]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 2,
-                            })} key={index}>
-                                <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
-                                <Avatar className="rounded-sm">
-                                    <AvatarImage src={item.image} />
-                                    <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>
-                                </Avatar>
-                                <div className="flex items-center justify-between w-full">
-                                    <span className="font-bold text-neutral-100">{item.name}</span>
-                                    <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
-                                    <div className="p-2">
-                                        {sortBy.startsWith("popularity") ? <Progress className="w-32 h-2" value={item.popularity} /> : ""}
+                        {isPending ?
+                            <div className="flex items-center justify-center w-full">
+                                <SpinnerLoader />
+                            </div>
+                            :
+                            TopArtist.map((item: TopArtist, index: number) => (
+                                <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
+                                    'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
+                                    'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
+                                    'bg-gradient-to-r from-[#CD7F32]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#CD7F32]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 2,
+                                })} key={index}>
+                                    <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
+                                    <Avatar className="rounded-sm">
+                                        <AvatarImage src={item.image} />
+                                        <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>
+                                    </Avatar>
+                                    <div className="flex items-center justify-between w-full">
+                                        <span className="font-bold text-neutral-100">{item.name}</span>
+                                        <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
+                                        <div className="p-2">
+                                            {sortBy.startsWith("popularity") ? <Progress className="w-32 h-2" value={item.popularity} /> : ""}
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        ))}
+                            ))}
                     </CardContent>
                 </Card>
             </div>
