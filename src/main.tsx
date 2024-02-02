@@ -13,6 +13,7 @@ import AccountPage from './pages/Account';
 import ArtistsPage from './pages/Artists';
 import SongsPage from './pages/Songs';
 import DebugPage from './pages/debug';
+import SearchPage from './pages/Search';
 
 const container = document.getElementById('root');
 
@@ -33,7 +34,7 @@ if (container) {
           <Route path="/profile/songs" element={<ProtectedRoute><Layout><SongsPage /></Layout></ProtectedRoute>} />
           <Route path="/account" element={<ProtectedRoute><Layout><AccountPage /></Layout></ProtectedRoute>} />
           <Route path="/debug" element={<ProtectedRoute><Layout><DebugPage /></Layout></ProtectedRoute>} />
-
+          <Route path="/search" element={<ProtectedRoute><Layout><SearchPage /></Layout></ProtectedRoute>} />
           {/* Non Routeable */}
           <Route path="*" element={<Layout><NotFound404 /></Layout>} />
         </Routes>

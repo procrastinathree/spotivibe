@@ -67,14 +67,14 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                             className="w-40 h-40 border-4 rounded-full lg:w-52 lg:h-52 border-neutral-100 bg-neutral-950 text-neutral-500"
                         />
                         <div className="flex flex-col items-center flex-grow gap-2 md:items-start">
-                            <h1 className="text-4xl font-bold text-primary-foreground">{CurrentUser?.data.display_name ?? ""}</h1>
-                            <a target="_blank" href={CurrentUser?.data.external_urls.spotify} className="flex items-center gap-2 font-semibold hover:text-primary text-primary-foreground">
+                            <h1 className="text-4xl font-bold text-secondary-foreground">{CurrentUser?.data.display_name ?? ""}</h1>
+                            <a target="_blank" href={CurrentUser?.data.external_urls.spotify} className="flex items-center gap-2 font-semibold hover:text-primary text-secondary-foreground">
                                 <SpotifyIcon size={16} />
                                 <span>
                                     Open in spotify
                                 </span>
                             </a>
-                            <span className="font-semibold text-primary-foreground">{CurrentUser?.data.followers.total} Followers</span>
+                            <span className="font-semibold text-secondary-foreground">{CurrentUser?.data.followers.total} Followers</span>
                             {CurrentTrack?.data ?
                                 <div className="flex items-center gap-4 px-4 py-2 rounded-lg bg-primary">
                                     <Avatar>

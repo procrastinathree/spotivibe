@@ -1,22 +1,20 @@
-import { FC, useEffect, useState } from "react";
-import { CardContent, CardHeader, CardTitle } from "../ui/card";
-import { buttonVariants } from "../ui/button";
-import { NavLink, useLocation } from "react-router-dom";
-import LoginHeader from "../ui/LoginHeader";
-import { Input } from "../ui/input";
-import { AlignJustify, Star } from "lucide-react";
-import ProfileHeader from "../ui/ProfileHeader";
-import axios from "axios";
-import { useQuery } from "@tanstack/react-query";
-import Cookies from "js-cookie";
 import {
     DropdownMenu,
     DropdownMenuContent,
     DropdownMenuItem,
-    DropdownMenuLabel,
-    DropdownMenuSeparator,
-    DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+    DropdownMenuTrigger
+} from "@/components/ui/dropdown-menu";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { AlignJustify, Star } from "lucide-react";
+import { FC, useEffect, useState } from "react";
+import { NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
+import LoginHeader from "../ui/LoginHeader";
+import ProfileHeader from "../ui/ProfileHeader";
+import { buttonVariants } from "../ui/button";
+import { CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Input } from "../ui/input";
 
 interface HeaderProps { }
 
@@ -24,6 +22,10 @@ const Header: FC<HeaderProps> = () => {
     const location = useLocation();
     const isLogin: boolean = !!Cookies.get("spotifyAuthToken");
     const [isMinWidth640, setIsMinWidth640] = useState<boolean>(false);
+
+    const [searchParams] = useSearchParams()
+    const navigate = useNavigate()
+    const [searchQuery, setSearchQuery] = useState<string>(searchParams.get("q") || "")
 
     const token = Cookies.get("spotifyAuthToken");
     const { data: CurrentUser, isPending } = useQuery({
@@ -57,18 +59,26 @@ const Header: FC<HeaderProps> = () => {
                     <CardTitle>
                         <NavLink
                             to="/"
-                            className="flex items-center mb-4 text-primary md:mb-0"
-                        >
+                            className="flex items-center mb-4 text-primary md:mb-0">
                             <img src="/spotivibe.png" className="w-8 mx-1" alt="" />
                             <span>Spoti</span>
-                            <span className="text-primary-foreground">vibe</span>
+                            <span className="text-secondary-foreground">vibe</span>
                         </NavLink>
                     </CardTitle>
                     <div className="flex gap-4">
-                        <Input
-                            type="search"
-                            placeholder="Search..."
-                            className="dark text-neutral-300 max-w-52" />
+                        {(!location.pathname.startsWith("/search") && isLogin) &&
+                            <Input
+                                type="search"
+                                placeholder="Search..."
+                                onKeyDown={(e) => {
+                                    if (e.key === "Enter") {
+                                        e.preventDefault()
+                                        navigate(`/search?q=${encodeURIComponent(searchQuery)}`)
+                                    }
+                                }}
+                                onChange={(e) => setSearchQuery(e.currentTarget.value)}
+                                className="dark text-neutral-300 max-w-52" />
+                        }
                         {isLogin ? isMinWidth640 ?
                             <DropdownMenu>
                                 <DropdownMenuTrigger className="dark">

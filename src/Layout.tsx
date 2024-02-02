@@ -13,7 +13,7 @@ const Layout: FC<LayoutProps> = ({ children }) => {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <div className="flex flex-col min-h-screen gap-16 bg-neutral-950">
+      <div className="flex flex-col min-h-screen gap-16 dark bg-neutral-950">
         <Header />
         <main className="container">
           {children}

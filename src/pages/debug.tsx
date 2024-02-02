@@ -11,14 +11,10 @@ interface DebugPageProps {
 const DebugPage: FC<DebugPageProps> = () => {
     const [timeRange, setTimeRange] = useState<string>("long_term")
     const token = Cookies.get("spotifyAuthToken")
-    const { data, refetch } = useQuery({
-        queryKey: ["TopSongs"],
-        queryFn: async () => {
-            const data = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=long_term&limit=100&offset=50`, { headers: { Authorization: `Bearer ${token}` } })
-            return data
-        },
+    const { data, isPending } = useQuery({
+        queryKey: ["debug"],
+        queryFn: async () => await axios.get('https://api.spotify.com/v1/search?q=avenged+sevenfold&type=album%2Cplaylist%2Cartist%2Ctrack&limit=10', { headers: { Authorization: `Bearer ${token}` } })
     })
-    console.log(data?.data.items.length)
 
     return <div className="text-xl bg-slate-100">
         <pre>
