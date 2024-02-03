@@ -6,9 +6,9 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { AlignJustify, Star } from "lucide-react";
 import { FC, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { NavLink, useLocation, useNavigate, useSearchParams } from "react-router-dom";
 import LoginHeader from "../ui/LoginHeader";
 import ProfileHeader from "../ui/ProfileHeader";
@@ -19,15 +19,15 @@ import { Input } from "../ui/input";
 interface HeaderProps { }
 
 const Header: FC<HeaderProps> = () => {
+    const [cookies] = useCookies(["spotifyAuthToken"])
+    const token = cookies.spotifyAuthToken
     const location = useLocation();
-    const isLogin: boolean = !!Cookies.get("spotifyAuthToken");
+    const isLogin: boolean = !!token;
     const [isMinWidth640, setIsMinWidth640] = useState<boolean>(false);
 
     const [searchParams] = useSearchParams()
     const navigate = useNavigate()
     const [searchQuery, setSearchQuery] = useState<string>(searchParams.get("q") || "")
-
-    const token = Cookies.get("spotifyAuthToken");
     const { data: CurrentUser, isPending } = useQuery({
         queryKey: ['CurrentUser'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })

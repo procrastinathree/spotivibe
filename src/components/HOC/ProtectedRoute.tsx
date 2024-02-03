@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { Navigate, useLocation } from 'react-router-dom';
-import Cookies from 'js-cookie'
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -9,6 +9,7 @@ interface ProtectedRouteProps {
 const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
   const [token, setToken] = useState<string | null>(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [cookies, setCookie] = useCookies(["spotifyAuthToken"])
   const location = useLocation();
 
   useEffect(() => {
@@ -18,12 +19,14 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
     if (urlToken) {
       console.log('Route: Token found');
-      Cookies.set("spotifyAuthToken", urlToken, { expires: 1 / 24 })
+      const ThirtyMinute = new Date(new Date().getTime() + 30 * 60 * 1000);
+      setCookie("spotifyAuthToken", urlToken, { expires: ThirtyMinute })
 
       setToken(urlToken);
     } else {
       console.log('route: check storage');
-      const storedToken = Cookies.get("spotifyAuthToken")
+      const storedToken = cookies.spotifyAuthToken
+      console.log(storedToken)
       setToken(storedToken || "");
     }
     setIsLoading(false);

@@ -1,13 +1,14 @@
-import TopSongsList from '@/components/profile/TopSongs';
-import TopArtistsList from '@/components/profile/TopArtists';
 import Taste from '@/components/profile/Taste';
+import TopArtistsList from '@/components/profile/TopArtists';
+import TopSongsList from '@/components/profile/TopSongs';
 
 import { FC, useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
-import Cookies from 'js-cookie';
 
 const ProfilePage: FC = () => {
-  const [token, setToken] = useState<string | null>(Cookies.get('spotifyAuthToken') as string);
+  const [cookies, setCookie] = useCookies(["spotifyAuthToken"])
+  const [token, setToken] = useState<string | null>(cookies.spotifyAuthToken as string);
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -19,7 +20,8 @@ const ProfilePage: FC = () => {
     console.log('ProfilePage: Extracted Token:', urlToken);
 
     if (urlToken) {
-      Cookies.set('spotifyAuthToken', urlToken);
+      const ThirtyMinute = new Date(new Date().getTime() + 30 * 60 * 1000);
+      setCookie('spotifyAuthToken', urlToken, { expires: ThirtyMinute });
       setToken(urlToken);
       console.log('ProfilePage: save to local storage');
       window.history.replaceState({}, document.title, "/profile");

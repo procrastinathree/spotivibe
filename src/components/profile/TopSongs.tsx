@@ -1,50 +1,28 @@
-import { FC, useState } from "react";
 import { useQuery } from '@tanstack/react-query';
-import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
-import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import { NavLink } from "react-router-dom";
-import { buttonVariants } from "../ui/button";
 import axios from "axios";
 import { cx } from "class-variance-authority";
-import Cookies from "js-cookie";
+import { FC, useState } from "react";
+import { useCookies } from "react-cookie";
+import { Link, NavLink } from "react-router-dom";
+import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { buttonVariants } from "../ui/button";
+import { Card, CardContent, CardFooter, CardHeader, CardTitle } from "../ui/card";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
 import { Skeleton } from "../ui/skeleton";
-export type TopSongs = {
-    name: string;
-    image: string
-    url: string;
-    duration: number;
-    release_date: string;
-    image_hd?: string;
-    popularity: number;
-    artists: { name: string }[]
-}
 
 const TopSongsList: FC = () => {
-    const token = Cookies.get("spotifyAuthToken")
+    const [cookies] = useCookies(["spotifyAuthToken"])
+    const token = cookies.spotifyAuthToken
     const [timeRange, setTimeRange] = useState<string>("long_term")
 
     const { data, refetch, isPending } = useQuery({
         queryKey: ["TopSongs"],
         queryFn: async () => {
-            const data = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=10`, { headers: { Authorization: `Bearer ${token}` } })
+            const { data } = await axios.get(`https://api.spotify.com/v1/me/top/tracks?time_range=${timeRange}&limit=10`, { headers: { Authorization: `Bearer ${token}` } })
             return data
         }
     })
-
-
-    let TopSongs: TopSongs[] = isPending ? [] : data?.data.items
-        .map((item: any) => ({
-            name: item.name,
-            image: item.album.images[2].url,
-            image_hd:item.album.images[1].url,
-            url: item.external_urls.spotify,
-            artists: item.artists.map((item: any) => ({
-                name: item.name,
-                url: item.external_urls.spotify
-            }))
-        })) ?? []
 
     const handleTimeRangeChange = (value: string) => {
         setTimeRange(value)
@@ -75,14 +53,14 @@ const TopSongsList: FC = () => {
                     <Skeleton className="w-40 h-40 scale-75 rounded-full -translate-x-52 drop-shadow-lg" />
                 </CardContent> :
                 <CardContent className="flex flex-row gap-2">
-                    {TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
-                        <a href={item.url} target="_blank" className={cx('w-40 drop-shadow-lg', {
+                    {data.items.slice(0, 3).map((item: any, index: number) => (
+                        <Link to={`/track/${item.id}`} className={cx('w-40 drop-shadow-lg', {
                             'z-20 hover:scale-[1.02] ease-out duration-300': index === 0,
                             '-translate-x-24 scale-90 z-10 hover:-translate-x-20 ease-out duration-300': index === 1,
                             '-translate-x-52 scale-75 hover:-translate-x-44 ease-out duration-300': index === 2,
                         })} key={item.name}>
-                            <img src={item.image_hd} className="w-full rounded-full" alt={item.name} />
-                        </a>
+                            <img src={item.album.images[1].url} className="w-full rounded-full" alt={item.name} />
+                        </Link>
                     ))}
                 </CardContent>
             }
@@ -101,7 +79,7 @@ const TopSongsList: FC = () => {
                 </CardContent>
                 :
                 <CardContent className="flex flex-col gap-3">
-                    {TopSongs.map((item: TopSongs, index: number) => (
+                    {data.items.map((item: any, index: number) => (
                         <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
                             'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
                             'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
@@ -109,15 +87,15 @@ const TopSongsList: FC = () => {
                         })} key={index}>
                             <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
                             <Avatar>
-                                <AvatarImage src={item.image} />
+                                <AvatarImage src={item.album.images[2].url} />
                                 <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>
                             </Avatar>
                             <div className="flex flex-col gap-2">
                                 <span className="font-bold text-neutral-100">{item.name}</span>
                                 <div className="flex gap-2">{
-                                    item.artists.map((artist: any, index: number, array) => (
+                                    item.artists.map((artist: any, index: number, array: []) => (
                                         <div className="flex gap-2" key={artist.name}>
-                                            <a href={artist.url} target="_blank" className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary " key={artist.name}>{artist.name}</a>
+                                            <Link to={`/artist/${artist.id}`} className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary " key={artist.name}>{artist.name}</Link>
                                             {index !== array.length - 1 ?
                                                 <Separator orientation="vertical" className="dark" key={artist.name} /> :
                                                 ""
@@ -126,7 +104,7 @@ const TopSongsList: FC = () => {
                                     ))
                                 }</div>
                             </div>
-                            <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
+                            <Link to={`/track/${item.id}`} className="absolute w-full h-full" key={item.name}></Link>
                         </div>
                     ))}
                 </CardContent>

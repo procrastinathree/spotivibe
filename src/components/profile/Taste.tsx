@@ -1,19 +1,20 @@
-import { FC, useState } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
-import Cookies from "js-cookie";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import { TopSongs } from "./TopSongs";
-import { Progress } from "../ui/progress";
+import { formatDistanceToNow } from 'date-fns';
+import { FC, useState } from "react";
+import { useCookies } from "react-cookie";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Card, CardContent, CardHeader, CardTitle } from "../ui/card";
+import { Progress } from "../ui/progress";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../ui/select";
 import { Separator } from "../ui/separator";
-import { formatDistanceToNow } from 'date-fns'
 import { Skeleton } from "../ui/skeleton";
+import { TopSongs } from "./TopSongs";
 
 
 const Taste: FC = () => {
-    const token = Cookies.get("spotifyAuthToken")
+    const [cookies] = useCookies(["spotifyAuthToken"])
+    const token = cookies.spotifyAuthToken
     const [timeRange, setTimeRange] = useState<string>("long_term")
 
     const { data, refetch, isPending } = useQuery({

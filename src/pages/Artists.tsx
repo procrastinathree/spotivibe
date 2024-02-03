@@ -7,8 +7,8 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { cx } from "class-variance-authority";
-import Cookies from "js-cookie";
 import { FC, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 
 interface ArtistsPageProps {
@@ -16,7 +16,8 @@ interface ArtistsPageProps {
 }
 
 const ArtistsPage: FC<ArtistsPageProps> = () => {
-    const token = Cookies.get("spotifyAuthToken")
+    const [cookies] = useCookies(["spotifyAuthToken"])
+    const token = cookies.spotifyAuthToken
     const [timeRange, setTimeRange] = useState<string>("long_term")
     const [sortBy, setSortBy] = useState<string>("spotify_rank")
 

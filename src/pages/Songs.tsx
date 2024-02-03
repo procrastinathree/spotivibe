@@ -5,12 +5,11 @@ import { Progress } from "@/components/ui/progress";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import SpinnerLoader from "@/components/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
 import { cx } from "class-variance-authority";
-import Cookies from "js-cookie";
 import { FC, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 
 interface SongsPageProps {
@@ -18,7 +17,8 @@ interface SongsPageProps {
 }
 
 const SongsPage: FC<SongsPageProps> = () => {
-    const token = Cookies.get("spotifyAuthToken")
+    const [cookies] = useCookies(["spotifyAuthToken"])
+    const token = cookies.spotifyAuthToken
     const [timeRange, setTimeRange] = useState<string>("long_term")
     const [sortBy, setSortBy] = useState<string>("spotify_rank")
     const { data, refetch, isPending } = useQuery({

@@ -6,25 +6,34 @@ import { Input } from "@/components/ui/input";
 import SpinnerLoader from "@/components/ui/spinner";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { Search } from "lucide-react";
-import { FC, useState } from "react";
+import { FC, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import NotFound404 from "./NotFound";
 const SearchPage: FC = () => {
-    const token = Cookies.get("spotifyAuthToken")
+    const [cookies] = useCookies(["spotifyAuthToken"])
+    const token = cookies.spotifyAuthToken
 
     const [searchParams] = useSearchParams()
     const navigate = useNavigate()
     const [searchQuery, setSearchQuery] = useState<string>(searchParams.get("q") || "")
 
-    const { data, isPending, isError, refetch } = useQuery({
+    const type = searchParams.get("type") || null
+    const offset = (parseInt(searchParams.get("page") as string) - 1) * 24 || 0
+
+
+    const { data, isPending, refetch } = useQuery({
         queryKey: ["search"],
         queryFn: async () => {
-            const data = await axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=album%2Cartist%2Ctrack&limit=15`, { headers: { Authorization: `Bearer ${token}` } })
+            const data = await axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=${type ?? "album%2Cartist%2Ctrack"}&limit=24&offset=${offset}`, { headers: { Authorization: `Bearer ${token}` } })
             return data.data
         }
     })
 
+    useEffect(() => {
+        refetch()
+    }, [searchParams.get("page")])
 
     return (
         <div className="flex flex-col gap-16">
@@ -37,24 +46,36 @@ const SearchPage: FC = () => {
                         if (e.key === "Enter") {
                             e.preventDefault()
                             navigate(`/search?q=${encodeURIComponent(searchQuery)}`)
-                            refetch()
+                            navigate(0)
                         }
                     }}
                     onChange={(e) => setSearchQuery(e.currentTarget.value)}
                     className="rounded-r-none dark text-neutral-300" />
                 <Button type="button" className="rounded-l-none dark" onClick={() => {
                     navigate(`/search?q=${encodeURIComponent(searchQuery)}`)
-                    refetch()
-                }}><Search className="text-primary-foreground"/></Button>
+                    navigate(0)
+                }}><Search className="text-primary-foreground" /></Button>
             </div>
             {isPending ?
                 <SpinnerLoader />
                 :
-                <>
-                    <SearchArtists searchQuery={searchQuery} data={data.artists} />
-                    <SearchSongs searchQuery={searchQuery} data={data.tracks} />
-                    <SearchAlbums searchQuery={searchQuery} data={data.albums}/>
-                </>
+                !searchParams.get("type") ?
+                    <>
+                        <SearchArtists data={data.artists} />
+                        <SearchSongs data={data.tracks} />
+                        <SearchAlbums data={data.albums} />
+                    </>
+                    :
+                    searchParams.get("type") === "artist" ?
+                        <SearchArtists data={data.artists} />
+                        :
+                        searchParams.get("type") === "track" ?
+                            <SearchSongs data={data.tracks} />
+                            :
+                            searchParams.get("type") === "album" ?
+                                <SearchAlbums data={data.albums} />
+                                :
+                                <NotFound404 />
             }
         </div>
     );

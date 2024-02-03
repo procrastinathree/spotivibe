@@ -1,6 +1,8 @@
+import { ChevronLeft, ChevronRight } from "lucide-react";
 import { FC } from "react";
-import { Link } from "react-router-dom";
+import { Link, useSearchParams } from "react-router-dom";
 import { Avatar, AvatarFallback, AvatarImage } from "../ui/avatar";
+import { Button } from "../ui/button";
 import { Card, CardHeader, CardTitle } from "../ui/card";
 import { Separator } from "../ui/separator";
 
@@ -13,20 +15,36 @@ interface SearchSongsProps {
         previous: string;
         total: number
     };
-    searchQuery: string;
 }
 
-const SearchSongs: FC<SearchSongsProps> = ({ data, searchQuery }) => {
+const SearchSongs: FC<SearchSongsProps> = ({ data }) => {
     const songs = data.items
-    console.log(songs)
+    const [searchParams, setSearchParams] = useSearchParams()
+    const nextPage = () => {
+        let page = parseInt(searchParams.get("page") as string) || 1
+        return (page + 1).toString()
+    }
+    const prevPage = () => {
+        let page = parseInt(searchParams.get("page") as string) || 1
+        return (page > 1 ? page - 1 : 0).toString()
+    }
+
+    const handlePage = (params: string) => {
+        setSearchParams({ q: (searchParams.get("q") as string), type: "track", page: params === "next" ? nextPage() : prevPage() })
+    }
 
     return (
         <div className="flex flex-col">
             <Card className="px-8 py-2 rounded-b-none bg-primary w-96">
                 <CardTitle className="font-bold text-primary-foreground">Songs</CardTitle>
             </Card>
-            <Card className="rounded-tl-none">
-                <CardHeader className="grid grid-cols-3 gap-4">
+            <Card className="flex flex-col overflow-hidden rounded-tl-none md:flex-row">
+                <CardHeader className="w-full p-0 md:w-12">
+                    {(parseInt((searchParams.get("page") as string)) > 1) &&
+                        <Button variant={"secondary"} onClick={() => handlePage("prev")} className="h-full rounded-none"><ChevronLeft className="rotate-90 md:rotate-0" /></Button>
+                    }
+                </CardHeader>
+                <CardHeader className="grid w-full grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
                     {songs.map((item: any, index: number) => (
                         <div className="relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30" key={index}>
                             <Avatar>
@@ -51,9 +69,11 @@ const SearchSongs: FC<SearchSongsProps> = ({ data, searchQuery }) => {
                         </div>
                     ))}
                 </CardHeader>
-                {/* <CardFooter className="flex flex-row justify-center">
-                <Link to={`/search?q=${encodeURIComponent(searchQuery)}&type=artist&page=2`} className={buttonVariants({ variant: "ghost", size: "lg", className: "text-lg w-full text-primary hover:text-primary" })}>VIEW MORE</Link>
-            </CardFooter> */}
+                <CardHeader className="p-0 md:w-12">
+                    {data.next &&
+                        <Button variant={"secondary"} onClick={() => handlePage("next")} className="h-full rounded-none"><ChevronRight className="rotate-90 md:rotate-0" /></Button>
+                    }
+                </CardHeader>
             </Card>
         </div>
     );

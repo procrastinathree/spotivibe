@@ -5,8 +5,8 @@ import { ToastAction } from "@/components/ui/toast";
 import { useToast } from "@/components/ui/use-toast";
 import { useQuery } from "@tanstack/react-query";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { FC, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 
 interface AccountPageProps {
@@ -14,7 +14,8 @@ interface AccountPageProps {
 }
 
 const AccountPage: FC<AccountPageProps> = () => {
-    const [token, setToken] = useState<string | null>(Cookies.get('spotifyAuthToken') || "");
+    const [cookies, setCookie, removeCookie] = useCookies(["spotifyAuthToken"])
+    const [token, setToken] = useState<string | null>((cookies.spotifyAuthToken) || "");
     const { toast } = useToast()
     const navigate = useNavigate();
 
@@ -27,7 +28,8 @@ const AccountPage: FC<AccountPageProps> = () => {
         console.log('ProfilePage: Extracted Token:', urlToken);
 
         if (urlToken) {
-            Cookies.set('spotifyAuthToken', urlToken);
+            const ThirtyMinute = new Date(new Date().getTime() + 30 * 60 * 1000);
+            setCookie('spotifyAuthToken', urlToken, { expires: ThirtyMinute });
             setToken(urlToken);
             window.history.replaceState({}, document.title, "/profile");
         }
@@ -57,7 +59,7 @@ const AccountPage: FC<AccountPageProps> = () => {
 
     const handleLogout = () => {
         console.log('ProfilePage: Log Out...');
-        Cookies.remove('spotifyAuthToken')
+        removeCookie('spotifyAuthToken')
         navigate('/');
     };
 
