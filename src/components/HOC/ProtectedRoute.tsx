@@ -19,8 +19,8 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children }) => {
 
     if (urlToken) {
       console.log('Route: Token found');
-      const ThirtyMinute = new Date(new Date().getTime() + 30 * 60 * 1000);
-      setCookie("spotifyAuthToken", urlToken, { expires: ThirtyMinute })
+      const expires = new Date(new Date().getTime() + 50 * 60 * 1000);
+      setCookie("spotifyAuthToken", urlToken, { expires: expires })
 
       setToken(urlToken);
     } else {

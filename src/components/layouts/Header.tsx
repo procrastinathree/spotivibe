@@ -77,7 +77,7 @@ const Header: FC<HeaderProps> = () => {
                                     }
                                 }}
                                 onChange={(e) => setSearchQuery(e.currentTarget.value)}
-                                className="dark text-neutral-300 max-w-52" />
+                                className="dark text-neutral-300 w-72" />
                         }
                         {isLogin ? isMinWidth640 ?
                             <DropdownMenu>

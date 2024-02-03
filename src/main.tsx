@@ -14,6 +14,9 @@ import ArtistsPage from './pages/Artists';
 import SongsPage from './pages/Songs';
 import DebugPage from './pages/debug';
 import SearchPage from './pages/Search';
+import ArtistDetailPage from './pages/ArtistDetail';
+import TrackDetailPage from './pages/TrackDetail';
+import AlbumDetailPage from './pages/AlbumDetail';
 
 const container = document.getElementById('root');
 
@@ -35,6 +38,9 @@ if (container) {
           <Route path="/account" element={<ProtectedRoute><Layout><AccountPage /></Layout></ProtectedRoute>} />
           <Route path="/debug" element={<ProtectedRoute><Layout><DebugPage /></Layout></ProtectedRoute>} />
           <Route path="/search" element={<ProtectedRoute><Layout><SearchPage /></Layout></ProtectedRoute>} />
+          <Route path="/artist/:id" element={<ProtectedRoute><Layout><ArtistDetailPage /></Layout></ProtectedRoute>} />
+          <Route path="/track/:id" element={<ProtectedRoute><Layout><TrackDetailPage /></Layout></ProtectedRoute>} />
+          <Route path="/album/:id" element={<ProtectedRoute><Layout><AlbumDetailPage /></Layout></ProtectedRoute>} />
           {/* Non Routeable */}
           <Route path="*" element={<Layout><NotFound404 /></Layout>} />
         </Routes>

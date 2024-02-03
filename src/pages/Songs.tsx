@@ -1,4 +1,3 @@
-import { TopSongs } from "@/components/profile/TopSongs";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -10,13 +9,9 @@ import axios from "axios";
 import { cx } from "class-variance-authority";
 import { FC, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 
-
-interface SongsPageProps {
-
-}
-
-const SongsPage: FC<SongsPageProps> = () => {
+const SongsPage: FC = () => {
     const [cookies] = useCookies(["spotifyAuthToken"])
     const token = cookies.spotifyAuthToken
     const [timeRange, setTimeRange] = useState<string>("long_term")
@@ -28,35 +23,22 @@ const SongsPage: FC<SongsPageProps> = () => {
             return data.data
         },
     })
-    const [TopSongs, setTopSongs] = useState<TopSongs[]>([])
+    const [TopSongs, setTopSongs] = useState<any[]>([])
 
     useEffect(() => {
-        const trimmedData: TopSongs[] = data?.items
-            .map((item: any) => ({
-                name: item.name,
-                image: item.album.images[2].url,
-                image_hd: item.album.images[1].url,
-                duration: item.duration_ms,
-                release_date: item.album.release_date,
-                popularity: item.popularity,
-                url: item.external_urls.spotify,
-                artists: item.artists.map((item: any) => ({
-                    name: item.name,
-                    url: item.external_urls.spotify
-                }))
-            }))
+        const trimmedData: any[] = data?.items
         if (sortBy === "popularity_high") {
             setTopSongs(trimmedData.sort((a, b) => b.popularity - a.popularity) ?? [])
         } else if (sortBy === "popularity_low") {
             setTopSongs(trimmedData.sort((a, b) => a.popularity - b.popularity) ?? [])
         } else if (sortBy === "length_long") {
-            setTopSongs(trimmedData.sort((a, b) => b.duration - a.duration) ?? [])
+            setTopSongs(trimmedData.sort((a, b) => b.duration_ms - a.duration_ms) ?? [])
         } else if (sortBy === "length_short") {
-            setTopSongs(trimmedData.sort((a, b) => a.duration - b.duration) ?? [])
+            setTopSongs(trimmedData.sort((a, b) => a.duration_ms - b.duration_ms) ?? [])
         } else if (sortBy === "release_old") {
-            setTopSongs(trimmedData.sort((a, b) => new Date(a.release_date).getTime() - new Date(b.release_date).getTime()) ?? [])
+            setTopSongs(trimmedData.sort((a, b) => new Date(a.album.release_date).getTime() - new Date(b.album.release_date).getTime()) ?? [])
         } else if (sortBy === "release_new") {
-            setTopSongs(trimmedData.sort((a, b) => new Date(b.release_date).getTime() - new Date(a.release_date).getTime()) ?? [])
+            setTopSongs(trimmedData.sort((a, b) => new Date(b.album.release_date).getTime() - new Date(a.release_date).getTime()) ?? [])
         } else {
             setTopSongs(trimmedData ?? [])
         }
@@ -73,20 +55,20 @@ const SongsPage: FC<SongsPageProps> = () => {
         }, 500);
     }
     const formatDuration = (milliseconds: number): string => new Date(milliseconds).toISOString().substr(14, 5);
-    const countByDecade = (decade: number, data: TopSongs[]) => {
+    const countByDecade = (decade: number, data: any[]) => {
         const startYear = decade;
         const endYear = startYear + 9;
 
-        return data.filter((item: TopSongs) => {
-            const releaseYear = new Date(item.release_date).getFullYear();
+        return data.filter((item: any) => {
+            const releaseYear = new Date(item.album.release_date).getFullYear();
             return releaseYear >= startYear && releaseYear <= endYear;
         }).length;
     };
-    const countItemsByDuration = (dataArray: TopSongs[], thresholdInMinutes: number) => {
+    const countItemsByDuration = (dataArray: any[], thresholdInMinutes: number) => {
         const thresholdInMilliseconds = thresholdInMinutes * 60 * 1000;
 
-        const countLessThanOrEqualThreshold = dataArray.filter(item => item.duration <= thresholdInMilliseconds).length;
-        const countGreaterThanOrEqualThreshold = dataArray.filter(item => item.duration >= thresholdInMilliseconds).length;
+        const countLessThanOrEqualThreshold = dataArray.filter(item => item.duration_ms <= thresholdInMilliseconds).length;
+        const countGreaterThanOrEqualThreshold = dataArray.filter(item => item.duration_ms >= thresholdInMilliseconds).length;
 
         return {
             lessThanOrEqualThreshold: countLessThanOrEqualThreshold,
@@ -147,13 +129,12 @@ const SongsPage: FC<SongsPageProps> = () => {
                                 </Skeleton>
                             </div> :
                             <div className="flex flex-row w-full gap-6 lg:w-1/3">
-                                {TopSongs.slice(0, 3).map((item: TopSongs, index: number) => (
-                                    <a
-                                        href={item.url}
-                                        target="_blank"
+                                {TopSongs.slice(0, 3).map((item: any, index: number) => (
+                                    <Link
+                                        to={`/track/${item.id}`}
                                         className="relative w-full h-56 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]"
                                         key={item.name}>
-                                        <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
+                                        <img src={item.album.images[1].url} className="object-cover w-full h-full rounded-lg" alt={item.name} />
                                         <span
                                             className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
                                                 "text-[#FFD700]/50": index === 0,
@@ -163,7 +144,7 @@ const SongsPage: FC<SongsPageProps> = () => {
                                         >
                                             {index + 1}
                                         </span>
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         }
@@ -175,15 +156,15 @@ const SongsPage: FC<SongsPageProps> = () => {
                                 <CardContent className="flex flex-col gap-2">
                                     <div className="flex items-center gap-4">
                                         <CardTitle className="w-1/2 overflow-hidden text-base lg:w-24 overflow-ellipsis">Obscure</CardTitle> {/* Step 3 */}
-                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: TopSongs) => songs.popularity <= 50).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
+                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: any) => songs.popularity <= 50).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
                                         <CardTitle className="w-1/2 overflow-hidden text-base lg:w-24 overflow-ellipsis">Average</CardTitle> {/* Step 3 */}
-                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: TopSongs) => songs.popularity < 80 && songs.popularity > 50).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
+                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: any) => songs.popularity < 80 && songs.popularity > 50).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                     <div className="flex items-center gap-4">
                                         <CardTitle className="w-1/2 overflow-hidden text-base lg:w-24 overflow-ellipsis">Popular</CardTitle> {/* Step 3 */}
-                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: TopSongs) => songs.popularity >= 80).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
+                                        <Progress value={isPending ? 0 : TopSongs.filter((songs: any) => songs.popularity >= 80).length * 2} className="w-full h-2 lg:w-2/3" /> {/* Step 2 */}
                                     </div>
                                 </CardContent>
                             </div>
@@ -233,7 +214,7 @@ const SongsPage: FC<SongsPageProps> = () => {
                         </CardContent>
                         :
                         <CardContent className="flex flex-col gap-4">
-                            {TopSongs.map((item: TopSongs, index: number) => (
+                            {TopSongs.map((item: any, index: number) => (
                                 <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
                                     'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
                                     'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
@@ -241,22 +222,22 @@ const SongsPage: FC<SongsPageProps> = () => {
                                 })} key={index}>
                                     <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
                                     <Avatar>
-                                        <AvatarImage src={item.image} />
+                                        <AvatarImage src={item.album.images[2]?.url} />
                                         <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>
                                     </Avatar>
                                     <div className="flex items-center justify-between w-full">
                                         <div className="flex flex-col gap-2">
                                             <span className="overflow-hidden font-bold text-neutral-100 overflow-ellipsis">{item.name}</span>
                                             <div className="flex gap-2">{
-                                                item.artists.map((artist: any, index: number, array) => (
+                                                item.artists.map((artist: any, index: number, array: []) => (
                                                     <div className="flex gap-2" key={index}>
-                                                        <a
-                                                            href={artist.url}
+                                                        <Link
+                                                            to={`/artist/${artist.id}`}
                                                             target="_blank"
                                                             className="z-10 overflow-hidden overflow-x-hidden font-bold rounded-lg text-neutral-500 hover:text-primary overflow-ellipsis"
                                                             key={artist.name}>
                                                             {artist.name}
-                                                        </a>
+                                                        </Link>
                                                         {index !== array.length - 1 ?
                                                             <Separator orientation="vertical" className="dark" /> :
                                                             ""
@@ -271,7 +252,7 @@ const SongsPage: FC<SongsPageProps> = () => {
                                                     sortBy.startsWith("release") ? <span className="font-bold text-neutral-100 overflow-hidden overflow-ellipsis max-w-[100px]">{item.release_date}</span> : ""}
                                         </div>
                                     </div>
-                                    <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
+                                    <Link to={`/track/${item.id}`} className="absolute w-full h-full" key={item.name}></Link>
                                 </div>
                             ))}
                         </CardContent>

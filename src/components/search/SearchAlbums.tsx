@@ -56,7 +56,7 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ data }) => {
                                 <div className="flex gap-2">{
                                     item.artists.map((artist: any, index: number, array: []) => (
                                         <div className="flex gap-2" key={artist.name}>
-                                            <Link to={`/artist/${item.id}`} className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary " key={artist.name}>{artist.name}</Link>
+                                            <Link to={`/artist/${artist.id}`} className="z-10 font-bold rounded-lg text-neutral-500 hover:text-primary ">{artist.name}</Link>
                                             {index !== array.length - 1 ?
                                                 <Separator orientation="vertical" className="dark" key={artist.name} /> :
                                                 ""
@@ -65,7 +65,7 @@ const SearchAlbums: FC<SearchAlbumsProps> = ({ data }) => {
                                     ))
                                 }</div>
                             </div>
-                            <Link to={`/album/${item.id}`} className="absolute w-full h-full" key={item.name}></Link>
+                            <Link to={`/album/${item.id}`} className="absolute w-full h-full"></Link>
                         </div>
                     ))}
                 </CardHeader>

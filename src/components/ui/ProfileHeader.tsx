@@ -3,7 +3,7 @@ import axios from "axios";
 import { cx } from "class-variance-authority";
 import { FC } from "react";
 import { useCookies } from 'react-cookie';
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation } from "react-router-dom";
 import SpotifyIcon from "../icons/SpotifyIcon";
 import { Avatar, AvatarFallback, AvatarImage } from "./avatar";
 import { buttonVariants } from "./button";
@@ -25,6 +25,8 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
         queryKey: ['CurrentUser'],
         queryFn: async () => await axios.get("https://api.spotify.com/v1/me", { headers: { Authorization: `Bearer ${token}` } })
     })
+
+    localStorage.setItem("userCountry", CurrentUser?.data.country)
 
     const { data: CurrentTrack, error: CurrentTrackError } = useQuery({
         queryKey: ['CurrrentTrack'],
@@ -84,11 +86,11 @@ const ProfileHeader: FC<ProfileHeaderProps> = () => {
                                         <AvatarFallback></AvatarFallback>
                                     </Avatar>
                                     <div className="flex flex-col">
-                                        <a target="_blank" href={CurrentTrack?.data.item.external_urls.spotify} className="text-base font-semibold hover:underline text-primary-foreground">{CurrentTrack?.data.item.name}</a>
+                                        <Link to={`/track/${CurrentTrack?.data.item.id}`} className="text-base font-semibold hover:underline text-secondary-foreground">{CurrentTrack?.data.item.name}</Link>
                                         <div className="flex gap-2">{
                                             CurrentTrack?.data.item.artists.map((artist: any, index: number, array: any) => (
                                                 <div className="flex gap-2" key={artist.name}>
-                                                    <a href={artist.external_urls.spotify} target="_blank" className="z-10 font-bold rounded-lg text-neutral-950 hover:underline" key={artist.name}>{artist.name}</a>
+                                                    <Link to={`/artist/${artist.id}`} className="z-10 font-bold rounded-lg text-neutral-950 hover:underline" key={artist.name}>{artist.name}</Link>
                                                     {index !== array.length - 1 ?
                                                         <Separator orientation="vertical" className="dark" key={artist.name} /> :
                                                         ""

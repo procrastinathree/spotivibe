@@ -1,4 +1,3 @@
-import { TopArtist } from "@/components/profile/TopArtists";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Progress } from "@/components/ui/progress";
@@ -9,6 +8,7 @@ import axios from "axios";
 import { cx } from "class-variance-authority";
 import { FC, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import { Link } from "react-router-dom";
 
 
 interface ArtistsPageProps {
@@ -29,17 +29,10 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
         },
     })
 
-    const [TopArtist, setTopArtist] = useState<TopArtist[]>([])
+    const [TopArtist, setTopArtist] = useState<any[]>([])
 
     useEffect(() => {
-        const trimmedData: TopArtist[] = data?.items
-            .map((item: any) => ({
-                name: item.name,
-                image: item.images[2].url,
-                image_hd: item.images[1].url,
-                popularity: item.popularity,
-                url: item.external_urls.spotify,
-            }))
+        const trimmedData: any[] = data?.items
         if (sortBy === "popularity_high") {
             setTopArtist(trimmedData.sort((a, b) => b.popularity - a.popularity) ?? [])
         } else if (sortBy === "popularity_low") {
@@ -109,15 +102,15 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                             </div>
                             :
                             <div className="flex flex-row w-full gap-6 lg:w-1/3">
-                                {TopArtist.slice(0, 3).map((item: TopArtist, index: number) => (
-                                    <a href={item.url} target="_blank" className='relative w-full h-56 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
-                                        <img src={item.image_hd} className="object-cover w-full h-full rounded-lg" alt={item.name} />
+                                {TopArtist.slice(0, 3).map((item: any, index: number) => (
+                                    <Link to={`/artist/${item.id}`} target="_blank" className='relative w-full h-56 duration-200 ease-out drop-shadow-lg hover:scale-[1.02]' key={item.name}>
+                                        <img src={item.images[1].url} className="object-cover w-full h-full rounded-lg" alt={item.name} />
                                         <span className={cx("absolute text-5xl font-bold -translate-x-1/2 -translate-y-1/2 top-1/2 left-1/2", {
                                             "text-[#FFD700]/50": index === 0,
                                             "text-[#C0C0C0]/50": index === 1,
                                             "text-[#CD7F32]/50": index === 2,
                                         })}>{index + 1}</span>
-                                    </a>
+                                    </Link>
                                 ))}
                             </div>
                         }
@@ -128,15 +121,15 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                             <CardContent className="flex flex-col gap-2">
                                 <div className="flex items-center gap-4">
                                     <CardTitle className="w-24 text-base">Obscure</CardTitle>
-                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity <= 50).length * 2} className="h-2" />
+                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: any) => artist.popularity <= 50).length * 2} className="h-2" />
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <CardTitle className="w-24 text-base">Average</CardTitle>
-                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity < 80 && artist.popularity > 50).length * 2} className="h-2" />
+                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: any) => artist.popularity < 80 && artist.popularity > 50).length * 2} className="h-2" />
                                 </div>
                                 <div className="flex items-center gap-4">
                                     <CardTitle className="w-24 text-base">Popular</CardTitle>
-                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: TopArtist) => artist.popularity >= 80).length * 2} className="h-2" />
+                                    <Progress value={isPending ? 0 : TopArtist.filter((artist: any) => artist.popularity >= 80).length * 2} className="h-2" />
                                 </div>
                             </CardContent>
                         </Card>
@@ -149,7 +142,7 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                         </CardContent>
                         :
                         <CardContent className="flex flex-col gap-4">
-                            {TopArtist.map((item: TopArtist, index: number) => (
+                            {TopArtist.map((item: any, index: number) => (
                                 <div className={cx("relative flex items-center gap-4 p-2 duration-300 ease-out rounded-lg hover:bg-neutral-950/30", {
                                     'bg-gradient-to-r from-[#FFD700]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#FFD700]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 0,
                                     'bg-gradient-to-r from-[#C0C0C0]/10 via-neutral-900 to-neutral-900 ease-out duration-300 hover:from-[#C0C0C0]/10 hover:via-neutral-950/30 hover:to-neutral-950/30': index === 1,
@@ -157,12 +150,12 @@ const ArtistsPage: FC<ArtistsPageProps> = () => {
                                 })} key={index}>
                                     <span className="w-5 font-semibold text-end text-neutral-500">{index + 1}</span>
                                     <Avatar className="rounded-sm">
-                                        <AvatarImage src={item.image} />
+                                        <AvatarImage src={item.images[2].url} />
                                         <AvatarFallback>{item.name.at(0)?.toUpperCase()}</AvatarFallback>
                                     </Avatar>
                                     <div className="flex items-center justify-between w-full">
                                         <span className="font-bold text-neutral-100">{item.name}</span>
-                                        <a href={item.url} target="_blank" className="absolute w-full h-full" key={item.name}></a>
+                                        <Link to={`/artist/${item.id}`} target="_blank" className="absolute w-full h-full" key={item.name}></Link>
                                         <div className="p-2">
                                             {sortBy.startsWith("popularity") ? <Progress className="w-32 h-2" value={item.popularity} /> : ""}
                                         </div>

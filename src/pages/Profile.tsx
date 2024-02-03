@@ -20,8 +20,8 @@ const ProfilePage: FC = () => {
     console.log('ProfilePage: Extracted Token:', urlToken);
 
     if (urlToken) {
-      const ThirtyMinute = new Date(new Date().getTime() + 30 * 60 * 1000);
-      setCookie('spotifyAuthToken', urlToken, { expires: ThirtyMinute });
+      const expires = new Date(new Date().getTime() + 50 * 60 * 1000);
+      setCookie('spotifyAuthToken', urlToken, { expires: expires });
       setToken(urlToken);
       console.log('ProfilePage: save to local storage');
       window.history.replaceState({}, document.title, "/profile");
