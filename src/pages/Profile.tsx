@@ -1,3 +1,4 @@
+import Playlists from '@/components/profile/Playlists';
 import Taste from '@/components/profile/Taste';
 import TopArtistsList from '@/components/profile/TopArtists';
 import TopSongsList from '@/components/profile/TopSongs';
@@ -43,6 +44,7 @@ const ProfilePage: FC = () => {
         <TopArtistsList />
       </div>
       <Taste />
+      <Playlists />
     </div>
   );
 };

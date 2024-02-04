@@ -45,25 +45,19 @@ const TrackDetailPage: FC = () => {
                     </CardHeader>
                 </Card>
                 :
-                <Card className="relative flex flex-row">
-                    <span className="absolute flex items-center gap-2 px-2 py-2 rounded-sm bg-secondary text-secondary-foreground top-4 right-4">
+                <Card className="relative flex flex-col overflow-hidden md:flex-row min-h-96 md:min-h-fit">
+                    <span className="absolute z-10 flex items-center gap-2 px-2 py-2 rounded-sm bg-secondary text-secondary-foreground top-4 right-4">
                         <Clock size={20} />
                         {formatDuration(Track.duration_ms)}
                     </span>
-                    <a target="_blank" href={Track?.external_urls.spotify} className={buttonVariants({ className: "flex gap-2 !font-bold absolute bottom-4 right-4" })}>
-                        <SpotifyIcon size={16} />
-                        <span>
-                            Open in spotify
-                        </span>
-                    </a>
                     <img
-                        src={Track?.album.images[1].url}
+                        src={Track?.album.images[0].url}
                         alt="profile photo"
-                        className="object-cover w-40 h-40 rounded-md rounded-r-none lg:w-64 lg:h-80 border-neutral-100 bg-neutral-950 text-neutral-500"
+                        className="absolute inset-0 z-0 object-cover w-full h-full duration-100 rounded-md rounded-r-none pointer-events-none md:opacity-100 opacity-20 md:relative md:w-64 md:h-96 "
                     />
-                    <CardHeader className="flex flex-col justify-between">
+                    <CardHeader className="z-10 flex flex-col justify-between flex-grow pt-16 md:pt-4 bg-gradient-to-b from-transparent via-transparent to-neutral-950">
                         <div className="flex flex-col gap-2">
-                            <CardTitle className="text-3xl font-bold">{Track?.name}</CardTitle>
+                            <CardTitle className="text-2xl font-bold duration-200 ease-out lg:text-3xl">{Track?.name}</CardTitle>
                             <div className="flex gap-4">
                                 {Track.artists.map((item: any) => (
                                     <Link to={`/artist/${item.id}`} className={buttonVariants({ size: "sm" })} key={item.id}>{item.name}</Link>
@@ -75,17 +69,25 @@ const TrackDetailPage: FC = () => {
                                 <CardTitle className="text-lg">{getYear(new Date(Track.album.release_date))}</CardTitle>
                                 <CardDescription className="text-lg">Released on album:</CardDescription>
                             </div>
-                            <Link to={`/album/${Track.album.id}`} className="flex gap-4 p-2 pr-4 duration-200 ease-out rounded-sm w-fit bg-background hover:bg-background/50">
-                                <img src={Track.album.images[2].url} className="w-24 h-24 rounded-sm opacity-60" alt={Track.album.name} />
+                            <Link to={`/album/${Track.album.id}`} className="flex gap-4 p-2 pr-4 duration-200 ease-out rounded-sm w-fit max-w-96 bg-background hover:bg-background/50">
+                                <img src={Track.album.images[2].url} className="w-24 h-24 rounded-sm" alt={Track.album.name} />
                                 <div className="flex flex-col gap-2">
                                     <CardTitle className="text-base">{Track.album.name}</CardTitle>
-                                    {Track.album.artists.map((item: any) => (
-                                        <Link to={`/artist/${item.id}`} className={buttonVariants({ className: " !px-2 !py-1 h-6 w-fit !text-xs" })} key={item.id}>{item.name}</Link>
-                                    ))}
+                                    <div className="flex flex-col flex-wrap gap-2 md:flex-row">
+                                        {Track.album.artists.map((item: any) => (
+                                            <Link to={`/artist/${item.id}`} className={buttonVariants({ className: " !px-2 !py-1 h-6 w-fit !text-xs" })} key={item.id}>{item.name}</Link>
+                                        ))}
+                                    </div>
                                 </div>
                             </Link>
                         </div>
                     </CardHeader>
+                    <a target="_blank" href={Track?.external_urls.spotify} className={buttonVariants({ className: "flex gap-2 relative !z-20 rounded-t-none md:rounded-lg !font-bold md:absolute md:bottom-4 md:right-4" })}>
+                        <SpotifyIcon size={16} />
+                        <span>
+                            Open in spotify
+                        </span>
+                    </a>
                 </Card>
             }
         </div>

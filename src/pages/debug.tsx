@@ -10,10 +10,13 @@ interface DebugPageProps {
 const DebugPage: FC<DebugPageProps> = () => {
     const [cookies] = useCookies(["spotifyAuthToken"])
     const token = cookies.spotifyAuthToken
-    const { data } = useQuery({
+    const { data, isPending, isError } = useQuery({
         queryKey: ["debug"],
-        queryFn: async () => await axios.get('https://api.spotify.com/v1/search?q=avenged+sevenfold&type=album%2Cplaylist%2Cartist%2Ctrack&limit=10', { headers: { Authorization: `Bearer ${token}` } })
+        queryFn: async () => await axios.get('https://api.spotify.com/v1/search?a=a&type=artist&limit=50', { headers: { Authorization: `Bearer ${token}` } })
     })
+
+    if (isPending) return <h1 className="text-primary">LOADING</h1>
+    if (isError) return <h1 className="text-destructive">SOMETHING WENT WRONG</h1>
 
     return <div className="text-xl bg-slate-100">
         <pre>

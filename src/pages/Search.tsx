@@ -11,6 +11,7 @@ import { FC, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useNavigate, useSearchParams } from "react-router-dom";
 import NotFound404 from "./NotFound";
+import { toast } from "@/components/ui/use-toast";
 const SearchPage: FC = () => {
     const [cookies] = useCookies(["spotifyAuthToken"])
     const token = cookies.spotifyAuthToken
@@ -23,13 +24,23 @@ const SearchPage: FC = () => {
     const offset = (parseInt(searchParams.get("page") as string) - 1) * 24 || 0
 
 
-    const { data, isPending, refetch } = useQuery({
+    const { data, isPending, refetch, isError } = useQuery({
         queryKey: ["search"],
         queryFn: async () => {
             const data = await axios.get(`https://api.spotify.com/v1/search?q=${encodeURIComponent(searchQuery)}&type=${type ?? "album%2Cartist%2Ctrack"}&limit=24&offset=${offset}`, { headers: { Authorization: `Bearer ${token}` } })
             return data.data
         }
     })
+
+    if (isError) {
+        toast({
+            title: "Something went wrong",
+            description: "Failed to fetch data",
+            variant: "destructive"
+        })
+
+        return <NotFound404 />
+    }
 
     useEffect(() => {
         refetch()

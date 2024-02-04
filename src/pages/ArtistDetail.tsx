@@ -61,21 +61,15 @@ const ArtistDetailPage: FC = () => {
                     </CardHeader>
                 </Card>
                 :
-                <Card className="relative flex flex-row">
-                    <a target="_blank" href={Artist?.external_urls.spotify} className={buttonVariants({ className: "flex gap-2 !font-bold absolute bottom-4 right-4" })}>
-                        <SpotifyIcon size={16} />
-                        <span>
-                            Open in spotify
-                        </span>
-                    </a>
+                <Card className="relative flex flex-col overflow-hidden md:flex-row min-h-96 md:min-h-fit">
                     <img
-                        src={Artist?.images[1].url}
+                        src={Artist?.images[0].url}
                         alt="profile photo"
-                        className="object-cover w-40 h-40 rounded-md rounded-r-none lg:w-64 lg:h-80 border-neutral-100 bg-neutral-950 text-neutral-500"
+                        className="absolute inset-0 z-0 object-cover w-full h-full duration-100 rounded-md rounded-r-none pointer-events-none md:opacity-100 opacity-20 md:relative md:w-64 md:h-96 "
                     />
-                    <CardHeader className="flex flex-col justify-between">
+                    <CardHeader className="z-10 flex flex-col justify-between flex-grow bg-gradient-to-b via-transparent from-transparent to-neutral-950">
                         <div className="flex flex-col gap-2">
-                            <CardTitle className="text-3xl font-bold">{Artist?.name}</CardTitle>
+                            <CardTitle className="text-2xl font-bold duration-200 ease-out lg:text-3xl">{Artist?.name}</CardTitle>
                             <CardTitle className="text-base">{formatNumber(Artist.followers.total)} Followers</CardTitle>
                             <div className="flex gap-4">
                                 {Artist.genres.map((item: any) => (
@@ -112,6 +106,12 @@ const ArtistDetailPage: FC = () => {
                             </div>
                         }
                     </CardHeader>
+                    <a target="_blank" href={Artist?.external_urls.spotify} className={buttonVariants({ className: "flex gap-2 relative !z-20 rounded-t-none md:rounded-lg !font-bold md:absolute md:bottom-4 md:right-4" })}>
+                        <SpotifyIcon size={16} />
+                        <span>
+                            Open in spotify
+                        </span>
+                    </a>
                 </Card>
             }
             <div className="flex flex-col gap-4">
